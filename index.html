@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepanshu Tyagi | Portfolio</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for 3D elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Canvas for background effects -->
+    <canvas id="background-canvas"></canvas>
+    
+    <!-- Main container -->
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">Deepanshu Tyagi</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Hi, I'm <span class="highlight">Deepanshu Tyagi</span></h1>
+                <h2>BTech CSE Student & ML Enthusiast</h2>
+                <p>Building creative solutions with Machine Learning, Flutter, and more.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn primary">View Projects</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text animate-on-scroll">
+                    <p>Hi, I'm Deepanshu Tyagi, a curious and driven BTech CSE student. I love meeting new people and hearing their stories - it's amazing how much you can learn from others. I'm a strong communicator and listener, and I thrive in teams where everyone's working together towards a common goal.</p>
+                    
+                    <p>I'm really passionate about Machine Learning, and I've also got experience with backend and frontend development, video editing, and hardware projects.</p>
+                    
+                    <p>I'm always looking for new challenges and opportunities to grow. I believe that when we work together and share our ideas, we can achieve some pretty amazing things.</p>
+                    
+                    <div class="tech-stack">
+                        <h3>Technologies I work with:</h3>
+                        <ul>
+                            <li><i class="fab fa-python"></i> Python</li>
+                            <li><i class="fab fa-js"></i> JavaScript</li>
+                            <li><i class="fab fa-java"></i> Java</li>
+                            <li><i class="fab fa-react"></i> React</li>
+                            <li><i class="fas fa-fire"></i> Firebase</li>
+                            <li><i class="fas fa-brain"></i> TensorFlow</li>
+                            <li><i class="fas fa-brain"></i> PyTorch</li>
+                            <li><i class="fas fa-mobile-alt"></i> Flutter</li>
+                            <li><i class="fas fa-database"></i> SQL</li>
+                            <li><i class="fas fa-code"></i> C/C++</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-image animate-on-scroll">
+                    <div class="image-container">
+                        <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="section-header">
+                <h2 class="section-title">My Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <p class="section-description animate-on-scroll">
+                Here are some of the projects I've worked on. Each one has helped me grow as a developer and problem solver.
+            </p>
+            
+            <!-- Project cards will be added dynamically via JavaScript -->
+        </section>
+        <!-- Video Showcase Section -->
+        <section id="video-showcase">
+          <div class="section-header">
+              <h2 class="section-title">Video Editing</h2>
+              <div class="section-line"></div>
+          </div>
+          
+          <p class="section-description animate-on-scroll">
+              Check out some of my video editing work. I specialize in creating engaging content with smooth transitions and effects.
+          </p>
+          
+          <div class="video-container">
+              <!-- Video items will be added via JavaScript -->
+          </div>
+      </section>
+        <!-- Experience Section -->
+        <section id="experience">
+            <div class="section-header">
+                <h2 class="section-title">Experience & Education</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="experience-container">
+                <div class="timeline">
+                    <!-- Education -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>B.Tech CSE</h3>
+                            <h4>Northern India Engineering College, GGSIPU</h4>
+                            <span class="timeline-date">2023-2027</span>
+                            <p>Expected Graduation: May 2027</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Class 12th (CBSE)</h3>
+                            <h4>93.5% in PCM with English</h4>
+                            <span class="timeline-date">2022</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Hackathons & Events -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>1st Position, TECHKRITI(2025) - ECDC</h3>
+                            <h4>IIT Kanpur</h4>
+                            <span class="timeline-date">2025</span>
+                            <p>Secured the First Position in Galactic Dodger (an ECDC project)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Runner up, Entrepreneur's Point</h3>
+                            <h4>DROID 7.0 - 2025 (Mody University)</h4>
+                            <span class="timeline-date">2025</span>
+                            <p>Achieved 2nd position by pitching my Futuristic Idea of AR Tech</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Participant, Arma-Code-2025</h3>
+                            <h4>IISER BHOPAL</h4>
+                            <span class="timeline-date">2025</span>
+                            <p>Tackled on-spot problem statements with my team and built a whole platform within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Certificates -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Certified Courses</h3>
+                            <ul class="certificate-list">
+                                <li>Advanced Learning Algorithms - Coursera (2024)</li>
+                                <li>Supervised Machine Learning - Coursera (2025)</li>
+                                <li>Instagram Engagement - Coursera (2024)</li>
+                                <li>Reinforcement Learning - Coursera (In Progress)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info animate-on-scroll">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p><a href="mailto:deepanshutyagi0784@gmail.com">deepanshutyagi0784@gmail.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p><a href="tel:+919870600903">(+91) 9870600903</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p>New Delhi, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/deepanshutyagi86" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/deepanshutyagi" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://twitter.com/deepanshutyagi" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/deepanshutyagi" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form animate-on-scroll">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 Deepanshu Tyagi. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- AR Viewer Section (Hidden initially) -->
+    <div id="ar-viewer" class="hidden">
+        <button id="close-ar">Close AR View</button>
+        <div id="ar-container"></div>
+    </div>
+    
+    <!-- JS Files -->
+    <script src="assets/js/particles.js"></script>
+    <script src="assets/js/three-setup.js"></script>
+    <script src="assets/js/gradient.js"></script>
+    <script src="assets/js/code-rain.js"></script>
+    <script src="assets/js/ar-element.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
