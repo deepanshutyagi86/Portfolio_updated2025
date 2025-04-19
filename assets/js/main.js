@@ -219,6 +219,12 @@ function initVideoShowcaseSection() {
             description: 'College event merch reveal highlights featuring dynamic cuts and engaging motion graphics.',
             embedUrl: 'https://drive.google.com/file/d/1KtK22I-DB117RJHEySx1-yd1bcB_n-Yj/preview',
             technologies: ['Adobe Premiere Pro', 'Motion Graphics', 'Audio Mixing']
+        },
+        {
+            title: 'Rise of the Dragon',
+            description: 'A promotional video with dynamic transitions and professional effects',
+            embedUrl: 'https://drive.google.com/file/d/1mLnoM6TxhCUNu2j0mAQD2SMtcAOa0B8S/preview',
+            technologies: ['Adobe Premiere Pro', 'Motion Graphics', 'Adobe Photoshop']
         }
     ];
     
