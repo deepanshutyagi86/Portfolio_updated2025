@@ -134,6 +134,14 @@ function initProjectsSection() {
             technologies: ['React', 'Firestore', 'OTP Authentication'],
             image: 'assets/images/project-images/election.jpg',
             githubLink: 'https://github.com/deepanshutyagi86/college_election_platform.git'
+        },
+        {
+            title: 'User Conversion indentification',
+            description: 'Conversion Rate Model predicting user behavior & boosting conversions. Built with logistic regression',
+            technologies: ['Python', 'Logistic Regression', 'Web App', ],
+            image: 'assets/images/project-images/user_conversion.jpg',
+            githubLink: 'https://github.com/deepanshutyagi86/sentiment_api.git',
+            demoLink: 'https://user-conversion-1.onrender.com'
         }
     ];
     
