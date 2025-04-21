@@ -140,7 +140,7 @@ function initProjectsSection() {
             description: 'Conversion Rate Model predicting user behavior & boosting conversions. Built with logistic regression',
             technologies: ['Python', 'Logistic Regression', 'Web App', ],
             image: 'assets/images/project-images/user_conversion.jpg',
-            githubLink: 'https://github.com/deepanshutyagi86/sentiment_api.git',
+            githubLink: 'https://github.com/deepanshutyagi86/user_conversion.git',
             demoLink: 'https://user-conversion-1.onrender.com'
         }
     ];
