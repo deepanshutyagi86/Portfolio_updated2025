@@ -672,3 +672,185 @@ footer {
         height: 40px;
     }
 }
+
+/* Add these styles to your style.css file */
+
+@media screen and (max-width: 768px) {
+    /* Fix hero section */
+    .hero {
+        min-height: 100vh;
+        padding: 80px 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    /* Fix navigation and menu */
+    nav {
+        padding: 15px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(10, 10, 26, 0.95);
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mobile-menu {
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: rgba(10, 10, 26, 0.98);
+        z-index: 999;
+        padding: 80px 20px 40px;
+        transition: all 0.3s ease;
+        overflow-y: auto;
+    }
+    
+    .mobile-menu.active {
+        right: 0;
+    }
+    
+    .mobile-menu ul {
+        text-align: center;
+    }
+    
+    .mobile-menu ul li {
+        margin: 20px 0;
+    }
+    
+    .mobile-menu ul li a {
+        font-size: 20px;
+        padding: 10px;
+        display: block;
+    }
+    
+    /* Fix timeline for experience section */
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-dot {
+        left: 20px;
+    }
+    
+    .timeline-content {
+        width: calc(100% - 50px);
+        margin-left: 50px !important;
+        margin-bottom: 30px;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 50px;
+    }
+    
+    /* Fix about section */
+    .about-content {
+        flex-direction: column-reverse;
+    }
+    
+    .about-image {
+        margin-bottom: 30px;
+        flex: 0 0 100%;
+        max-width: 250px;
+        margin: 0 auto 30px;
+    }
+    
+    .about-text {
+        text-align: center;
+    }
+    
+    .tech-stack ul {
+        justify-content: center;
+    }
+    
+    /* Fix buttons in the hero section */
+    .cta-buttons {
+        justify-content: center;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn {
+        width: 100%;
+        padding: 12px 20px;
+        text-align: center;
+    }
+    
+    /* Fix project cards */
+    .projects-container {
+        padding: 0 10px;
+    }
+    
+    .project-card {
+        margin-bottom: 25px;
+    }
+    
+    /* Fix section padding */
+    section {
+        padding: 60px 0;
+    }
+    
+    /* Fix section titles */
+    .section-header {
+        margin-bottom: 30px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    /* Fix contact section */
+    .contact-container {
+        flex-direction: column;
+    }
+    
+    .contact-info, .contact-form {
+        width: 100%;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+/* Extra adjustments for very small screens */
+@media screen and (max-width: 375px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+    
+    .hero h2 {
+        font-size: 20px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .timeline-content h3 {
+        font-size: 18px;
+    }
+}
+
+/* Fix for 3D/background elements that might slow down mobile */
+@media screen and (max-width: 768px) {
+    /* Simplify or hide heavy background elements */
+    #background-canvas {
+        opacity: 0.3;
+    }
+    
+    /* Hide 3D elements on mobile */
+    canvas:not(#background-canvas) {
+        display: none;
+    }
+}

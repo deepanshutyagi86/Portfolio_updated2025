@@ -30,7 +30,56 @@ document.addEventListener('DOMContentLoaded', () => {
     initPageLoadingAnimation();
 
     optimizeForMobile();
+
+    optimizeForTouchDevices();
 });
+
+
+
+function optimizeForTouchDevices() {
+    // Check if it's a touch device
+    const isTouchDevice = 'ontouchstart' in window || 
+                         navigator.maxTouchPoints > 0 || 
+                         navigator.msMaxTouchPoints > 0;
+    
+    if (isTouchDevice) {
+        // Add a class to the body for CSS targeting
+        document.body.classList.add('touch-device');
+        
+        // Disable custom cursor on touch devices
+        const customCursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (customCursor) customCursor.style.display = 'none';
+        if (cursorDot) cursorDot.style.display = 'none';
+        
+        // Optimize heavy animations
+        const backgroundCanvas = document.getElementById('background-canvas');
+        if (backgroundCanvas) {
+            backgroundCanvas.style.opacity = '0.2';
+        }
+        
+        // Add proper touch event listeners to all interactive elements
+        document.querySelectorAll('a, button, .project-card, .timeline-item').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.classList.add('touch-active');
+            }, {passive: true});
+            
+            el.addEventListener('touchend', function() {
+                this.classList.remove('touch-active');
+            }, {passive: true});
+        });
+        
+        // Fix project cards for touch
+        document.querySelectorAll('.project-card').forEach(card => {
+            const overlay = card.querySelector('.project-overlay');
+            if (overlay) {
+                // Make overlay visible by default on touch with lower opacity
+                overlay.style.opacity = '0.7';
+            }
+        });
+    }
+}
 
 // Smooth scrolling for navigation links
 function initSmoothScrolling() {
@@ -352,11 +401,12 @@ function initCustomCursor() {
 
 // Mobile menu functionality
 // Replace the initMobileMenu function in main.js with this improved version
+// Replace your current initMobileMenu function with this one
 function initMobileMenu() {
     const nav = document.querySelector('nav');
     if (!nav) return;
     
-    // Create mobile menu button if it doesn't exist
+    // Create mobile menu button
     let mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     if (!mobileMenuBtn) {
         mobileMenuBtn = document.createElement('div');
@@ -365,7 +415,7 @@ function initMobileMenu() {
         nav.appendChild(mobileMenuBtn);
     }
     
-    // Create mobile menu if it doesn't exist
+    // Create mobile menu
     let mobileMenu = document.querySelector('.mobile-menu');
     if (!mobileMenu) {
         mobileMenu = document.createElement('div');
@@ -375,12 +425,13 @@ function initMobileMenu() {
         const navLinks = nav.querySelector('ul').cloneNode(true);
         mobileMenu.appendChild(navLinks);
         
-        // Append to body (not nav) for better positioning
+        // Append to body
         document.body.appendChild(mobileMenu);
     }
     
     // Toggle mobile menu
-    mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
         mobileMenuBtn.classList.toggle('active');
         mobileMenu.classList.toggle('active');
         
@@ -403,9 +454,9 @@ function initMobileMenu() {
     
     // Close menu when clicking outside
     document.addEventListener('click', (event) => {
-        if (!mobileMenu.contains(event.target) && 
-            !mobileMenuBtn.contains(event.target) && 
-            mobileMenu.classList.contains('active')) {
+        if (mobileMenu.classList.contains('active') && 
+            !mobileMenu.contains(event.target) && 
+            !mobileMenuBtn.contains(event.target)) {
             mobileMenuBtn.classList.remove('active');
             mobileMenu.classList.remove('active');
             document.body.style.overflow = '';
