@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize page loading animation
     initPageLoadingAnimation();
+
+    optimizeForMobile();
 });
 
 // Smooth scrolling for navigation links
@@ -349,32 +351,122 @@ function initCustomCursor() {
 }
 
 // Mobile menu functionality
+// Replace the initMobileMenu function in main.js with this improved version
 function initMobileMenu() {
     const nav = document.querySelector('nav');
     if (!nav) return;
     
-    // Create mobile menu button
-    const mobileMenuBtn = document.createElement('div');
-    mobileMenuBtn.className = 'mobile-menu-btn';
-    mobileMenuBtn.innerHTML = '<span></span><span></span><span></span>';
+    // Create mobile menu button if it doesn't exist
+    let mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    if (!mobileMenuBtn) {
+        mobileMenuBtn = document.createElement('div');
+        mobileMenuBtn.className = 'mobile-menu-btn';
+        mobileMenuBtn.innerHTML = '<span></span><span></span><span></span>';
+        nav.appendChild(mobileMenuBtn);
+    }
     
-    // Create mobile menu
-    const mobileMenu = document.createElement('div');
-    mobileMenu.className = 'mobile-menu';
-    
-    // Clone nav links
-    const navLinks = nav.querySelector('ul').cloneNode(true);
-    mobileMenu.appendChild(navLinks);
-    
-    // Append to nav
-    nav.appendChild(mobileMenuBtn);
-    nav.appendChild(mobileMenu);
+    // Create mobile menu if it doesn't exist
+    let mobileMenu = document.querySelector('.mobile-menu');
+    if (!mobileMenu) {
+        mobileMenu = document.createElement('div');
+        mobileMenu.className = 'mobile-menu';
+        
+        // Clone nav links
+        const navLinks = nav.querySelector('ul').cloneNode(true);
+        mobileMenu.appendChild(navLinks);
+        
+        // Append to body (not nav) for better positioning
+        document.body.appendChild(mobileMenu);
+    }
     
     // Toggle mobile menu
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenuBtn.classList.toggle('active');
         mobileMenu.classList.toggle('active');
+        
+        // Prevent scrolling when menu is open
+        if (mobileMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     });
+    
+    // Close menu when a link is clicked
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!mobileMenu.contains(event.target) && 
+            !mobileMenuBtn.contains(event.target) && 
+            mobileMenu.classList.contains('active')) {
+            mobileMenuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+
+function optimizeForMobile() {
+    // Check if device is mobile
+    const isMobile = window.innerWidth <= 768 || 
+                    ('ontouchstart' in window) ||
+                    (navigator.maxTouchPoints > 0) || 
+                    (navigator.msMaxTouchPoints > 0);
+    
+    if (isMobile) {
+        // Disable heavy animations
+        
+        // 1. Reduce particles count or disable
+        const bgCanvas = document.getElementById('background-canvas');
+        if (bgCanvas) {
+            // Either make it transparent or reduce the number of particles
+            bgCanvas.style.opacity = '0.3';
+        }
+        
+        // 2. Disable 3D elements for mobile
+        const threejsCanvas = document.querySelector('canvas:not(#background-canvas)');
+        if (threejsCanvas) {
+            threejsCanvas.style.display = 'none';
+        }
+        
+        // 3. Simplify code rain effect or disable it
+        const codeRainCanvas = document.querySelector('canvas[style*="opacity: 0.15"]');
+        if (codeRainCanvas) {
+            codeRainCanvas.style.display = 'none';
+        }
+        
+        // 4. Simplify gradient effect
+        const gradientCanvas = document.querySelector('canvas[style*="z-index: -2"]');
+        if (gradientCanvas) {
+            gradientCanvas.style.opacity = '0.5';
+        }
+        
+        // 5. Disable custom cursor completely
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (cursor) cursor.style.display = 'none';
+        if (cursorDot) cursorDot.style.display = 'none';
+        
+        // 6. Reduce animation complexity
+        document.documentElement.style.setProperty('--transition-duration', '0.3s');
+        
+        // 7. Reduce or disable scroll animations for performance
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        animateElements.forEach(el => {
+            el.classList.add('visible');
+            el.style.transform = 'none';
+            el.style.opacity = '1';
+        });
+    }
 }
 
 // Theme switcher (light/dark mode)
