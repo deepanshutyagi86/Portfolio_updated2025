@@ -854,3 +854,57 @@ footer {
         display: none;
     }
 }
+
+
+
+
+/* Add this to your style.css file */
+
+/* Fix for centered loading line */
+.section-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #4158D0, #64ffda);
+    margin: 0 auto;
+    position: relative;
+    left: 0; /* Reset any left positioning */
+    right: 0; /* Reset any right positioning */
+}
+
+/* Also fix the loading overlay line */
+.loading-overlay .section-line,
+.loading-content .section-line,
+.loading-bar,
+.loading-progress {
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.loading-content {
+    text-align: center;
+    width: 100%;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 20px auto 0;
+    position: relative;
+}
+
+/* Make sure the loading animation is also centered */
+@keyframes loadingProgress {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.loading-progress {
+    height: 100%;
+    width: 0;
+    background-color: #64ffda;
+    animation: loadingProgress 2s ease-out forwards;
+}

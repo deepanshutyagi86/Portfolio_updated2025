@@ -552,6 +552,8 @@ function initThemeSwitcher() {
 }
 
 // Page loading animation
+// Replace or update your initPageLoadingAnimation function in main.js
+
 function initPageLoadingAnimation() {
     // Create loading overlay
     const loadingOverlay = document.createElement('div');
@@ -559,6 +561,7 @@ function initPageLoadingAnimation() {
     loadingOverlay.innerHTML = `
         <div class="loading-content">
             <h2>Deepanshu Tyagi</h2>
+            <div class="section-line"></div>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
@@ -567,6 +570,22 @@ function initPageLoadingAnimation() {
     
     // Append to body
     document.body.appendChild(loadingOverlay);
+    
+    // Ensure the loading bar is perfectly centered
+    const loadingBar = loadingOverlay.querySelector('.loading-bar');
+    if (loadingBar) {
+        loadingBar.style.margin = '20px auto 0';
+        loadingBar.style.left = '0';
+        loadingBar.style.right = '0';
+    }
+    
+    // Ensure the section line is centered
+    const sectionLine = loadingOverlay.querySelector('.section-line');
+    if (sectionLine) {
+        sectionLine.style.margin = '0 auto';
+        sectionLine.style.left = '0';
+        sectionLine.style.right = '0';
+    }
     
     // Animate loading progress
     const loadingProgress = loadingOverlay.querySelector('.loading-progress');
