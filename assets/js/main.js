@@ -284,6 +284,12 @@ function initVideoShowcaseSection() {
             description: 'A promotional video with dynamic transitions and professional effects',
             embedUrl: 'https://drive.google.com/file/d/1mLnoM6TxhCUNu2j0mAQD2SMtcAOa0B8S/preview',
             technologies: ['Adobe Premiere Pro', 'Motion Graphics', 'Adobe Photoshop']
+        },
+        {
+            title : 'IIIT Delhi Promo',
+            description : 'A promotional video with dynamic transitions and professional effects.',
+            embedUrl : 'https://drive.google.com/file/d/15ht5yBNKy18-t5j3reArPQuliI3rdiyX/preview',
+            technologies : ['Adobe Premiere Pro', 'After Effects', 'Color Grading', 'Dynamic Transitions']
         }
     ];
     
