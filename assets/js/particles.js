@@ -39,7 +39,7 @@ class Particle {
             const dy = mouseY - this.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 100) {
+            if (distance < 200) {
                 this.speedX += dx * 0.001;
                 this.speedY += dy * 0.001;
             }
@@ -57,6 +57,10 @@ class Particle {
         // Apply some friction to prevent infinite acceleration
         this.speedX *= 0.99;
         this.speedY *= 0.99;
+        // ...existing code in update()...
+// Add a small random jitter to keep particles moving
+        this.speedX += (Math.random() - 0.5) * 0.1;
+        this.speedY += (Math.random() - 0.5) * 0.1;
     }
     
     // Draw the particle
@@ -110,7 +114,7 @@ class ParticleSystem {
         this.particles = [];
         this.mouseX = null;
         this.mouseY = null;
-        this.numParticles = Math.floor((window.innerWidth * window.innerHeight) / 15000); // Adjust based on screen size
+        this.numParticles = Math.floor((window.innerWidth * window.innerHeight) / 10000); // Adjust based on screen size
         
         this.resizeCanvas();
         this.setupEventListeners();

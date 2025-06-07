@@ -21,9 +21,9 @@ class AnimatedGradient {
         
         // Colors for the gradient (tech-inspired blues and purples)
         this.colors = [
-            { r: 10, g: 10, b: 26 },      // Dark blue
+            { r: 10, g: 10, b: 26 },     // Dark blue
             { r: 65, g: 88, b: 208 },      // Blue
-            { r: 138, g: 43, b: 226 },     // Purple
+            { r: 138, g: 43, b: 226 },      // Dark blue      // Purple
             { r: 100, g: 255, b: 218 },    // Teal
             { r: 10, g: 10, b: 26 }        // Dark blue (repeat for smooth transition)
         ];
@@ -40,7 +40,7 @@ class AnimatedGradient {
         this.currentColorIndex = 0;
         this.nextColorIndex = 1;
         this.transitionProgress = 0;
-        this.transitionSpeed = 0.002; // Lower value = slower transition
+        this.transitionSpeed = 0.01; // Lower value = slower transition
         
         // Setup event listeners
         this.setupEventListeners();
