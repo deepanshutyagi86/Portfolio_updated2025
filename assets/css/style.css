@@ -131,36 +131,7 @@ h1, h2, h3, h4 {
     color: var(--text-secondary);
     max-width: 90%;
 }
-/* Hero tagline placed at the bottom of the hero card */
-.hero-main .card-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
-.hero-tagline {
-  margin-top: auto; /* pushes this block to the bottom */
-  text-align: left;
-  padding-top: 18px;
-}
-
-.tagline-small {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  text-transform: lowercase;
-  display: block;
-  line-height: 1;
-}
-
-.tagline-large {
-  color: var(--text-primary);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-top: 6px;
-  letter-spacing: -0.5px;
-  display: block;
-}
 .muted-link {
     color: var(--text-secondary);
     text-decoration: none;
@@ -350,3 +321,133 @@ h1, h2, h3, h4 {
 }
 
 /*
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   Add this to the very bottom of your CSS
+   ========================================= */
+
+@media screen and (max-width: 1024px) {
+    .container {
+        padding: 20px;
+    }
+    
+    /* Relax the Bento Grid for Tablets */
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+    
+    .hero-main {
+        grid-column: span 2;
+    }
+    
+    .hero-photo {
+        grid-column: span 1;
+        height: 300px; /* Keep height consistent */
+    }
+    
+    .hero-socials {
+        grid-column: span 1;
+    }
+    
+    .hero-stats {
+        grid-column: span 2;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* 1. Typography Adjustments */
+    .hero-main h1 {
+        font-size: 2.5rem; /* Smaller heading for mobile */
+    }
+    
+    .hero-main p {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    /* 2. Bento Grid - Full Stack */
+    .bento-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 60px;
+    }
+
+    /* Reset all spans */
+    .hero-main, .hero-photo, .hero-socials, .hero-stats {
+        grid-column: auto;
+        grid-row: auto;
+        width: 100%;
+    }
+
+    /* Order: Text first, then Photo, then Stats, then Links */
+    .hero-main { order: 1; }
+    .hero-photo { 
+        order: 2; 
+        height: 250px; /* Shorter image on mobile */
+    }
+    .hero-stats { order: 3; }
+    .hero-socials { order: 4; }
+
+    /* 3. Make Social Icons Box Small (User Request) */
+    .hero-socials {
+        padding: 15px; /* Reduce padding */
+        flex-direction: row;
+        gap: 30px; /* Bring icons closer */
+        height: auto; /* Let it shrink */
+        min-height: 80px;
+    }
+    
+    .social-link {
+        font-size: 1.5rem; /* Slightly smaller icons */
+    }
+
+    /* 4. Stats Section Adjustment */
+    .hero-stats {
+        flex-direction: row; /* Keep row but wrap if needed */
+        flex-wrap: wrap;
+        padding: 20px 10px;
+        gap: 15px;
+    }
+    
+    .stat-item h3 {
+        font-size: 1.8rem;
+    }
+    
+    .stat-item p {
+        font-size: 0.7rem;
+    }
+
+    /* 5. Projects & Video Grids */
+    .projects-grid {
+        grid-template-columns: 1fr; /* 1 card per row */
+    }
+    
+    /* Fix for small screens to prevent overflow */
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .video-grid {
+        grid-template-columns: 1fr; /* Stack videos */
+    }
+
+    /* 6. Timeline Fixes */
+    .timeline {
+        margin-left: 10px;
+        padding-left: 30px;
+    }
+    
+    .timeline-content {
+        padding: 15px;
+    }
+    
+    .timeline-dot {
+        left: -35px; /* Adjust dot position for new padding */
+    }
+}
