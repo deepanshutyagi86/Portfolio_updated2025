@@ -82,19 +82,54 @@ h1, h2, h3, h4 {
 }
 
 /* Spotlight Effect Logic */
-.bento-card::before {
+/* =========================================
+   UNIVERSAL SPOTLIGHT EFFECT
+   Applies to Bento, Projects, and Videos
+   ========================================= */
+
+/* 1. Define the glow layer */
+.bento-card::before,
+.project-card::before,
+.video-card::before {
     content: "";
     position: absolute;
     top: var(--y, 0);
     left: var(--x, 0);
-    width: 600px;
+    width: 600px; /* Size of the glow */
     height: 600px;
     background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
     transform: translate(-50%, -50%);
-    opacity: 0;
+    opacity: 0; /* Hidden by default */
     transition: opacity 0.3s;
     pointer-events: none;
-    z-index: 0;
+    z-index: 0; /* Behind text */
+}
+
+/* 2. Show glow on hover */
+.bento-card:hover::before,
+.project-card:hover::before,
+.video-card:hover::before {
+    opacity: 1;
+}
+
+/* 3. Add Hover Border Color */
+.bento-card:hover,
+.project-card:hover,
+.video-card:hover {
+    border-color: var(--card-hover-border);
+    transform: translateY(-2px);
+}
+
+/* 4. Ensure content sits ON TOP of the glow */
+.card-content, 
+.project-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Special fix for Video Cards so glow shows behind the text part */
+.video-card {
+    position: relative; 
 }
 
 .bento-card:hover::before {
@@ -353,131 +388,118 @@ h1, h2, h3, h4 {
 /*
 
 /* =========================================
-   MOBILE RESPONSIVENESS
-   Add this to the very bottom of your CSS
+   MOBILE RESPONSIVENESS (Final Version)
    ========================================= */
 
-@media screen and (max-width: 1024px) {
-    .container {
-        padding: 20px;
-    }
-    
-    /* Relax the Bento Grid for Tablets */
-    .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: auto;
-    }
-    
-    .hero-main {
-        grid-column: span 2;
-    }
-    
-    .hero-photo {
-        grid-column: span 1;
-        height: 300px; /* Keep height consistent */
-    }
-    
-    .hero-socials {
-        grid-column: span 1;
-    }
-    
-    .hero-stats {
-        grid-column: span 2;
-    }
-}
-
 @media screen and (max-width: 768px) {
-    /* 1. Typography Adjustments */
-    .hero-main h1 {
-        font-size: 2.5rem; /* Smaller heading for mobile */
+    
+    /* --- 1. GENERAL TEXT & LAYOUT --- */
+    .container {
+        padding: 15px;
     }
     
-    .hero-main p {
-        font-size: 1rem;
-    }
-    
-    .section-title {
-        font-size: 1.75rem;
-    }
+    .hero-main h1 { font-size: 2.2rem; }
+    .hero-main p { font-size: 0.95rem; }
+    .section-title { font-size: 1.5rem; }
 
-    /* 2. Bento Grid - Full Stack */
+    /* --- 2. HERO SECTION (Stacked) --- */
     .bento-grid {
         display: flex;
         flex-direction: column;
         gap: 15px;
-        margin-bottom: 60px;
+        margin-bottom: 50px;
     }
 
-    /* Reset all spans */
-    .hero-main, .hero-photo, .hero-socials, .hero-stats {
-        grid-column: auto;
-        grid-row: auto;
-        width: 100%;
-    }
-
-    /* Order: Text first, then Photo, then Stats, then Links */
+    /* Order: Text -> Photo -> Stats -> Socials */
     .hero-main { order: 1; }
     .hero-photo { 
         order: 2; 
-        height: 250px; /* Shorter image on mobile */
+        height: 250px; 
     }
-    .hero-stats { order: 3; }
-    .hero-socials { order: 4; }
-
-    /* 3. Make Social Icons Box Small (User Request) */
-    .hero-socials {
-        padding: 15px; /* Reduce padding */
+    .hero-stats { 
+        order: 3; 
         flex-direction: row;
-        gap: 30px; /* Bring icons closer */
-        height: auto; /* Let it shrink */
-        min-height: 80px;
-    }
-    
-    .social-link {
-        font-size: 1.5rem; /* Slightly smaller icons */
-    }
-
-    /* 4. Stats Section Adjustment */
-    .hero-stats {
-        flex-direction: row; /* Keep row but wrap if needed */
-        flex-wrap: wrap;
-        padding: 20px 10px;
-        gap: 15px;
-    }
-    
-    .stat-item h3 {
-        font-size: 1.8rem;
-    }
-    
-    .stat-item p {
-        font-size: 0.7rem;
-    }
-
-    /* 5. Projects & Video Grids */
-    .projects-grid {
-        grid-template-columns: 1fr; /* 1 card per row */
-    }
-    
-    /* Fix for small screens to prevent overflow */
-    .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-
-    .video-grid {
-        grid-template-columns: 1fr; /* Stack videos */
-    }
-
-    /* 6. Timeline Fixes */
-    .timeline {
-        margin-left: 10px;
-        padding-left: 30px;
-    }
-    
-    .timeline-content {
+        flex-wrap: wrap; 
         padding: 15px;
     }
     
-    .timeline-dot {
-        left: -35px; /* Adjust dot position for new padding */
+    /* Compact Socials Strip */
+    .hero-socials {
+        order: 4;
+        padding: 15px;
+        flex-direction: row;
+        gap: 25px;
+        min-height: auto;
     }
+    .social-link { font-size: 1.4rem; }
+
+    /* --- 3. PROJECTS: 2x2 GRID (Small Cards) --- */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns */
+        gap: 10px; /* Tight gap */
+    }
+
+    .project-card {
+        border-radius: 12px;
+        /* Ensure it doesn't swipe */
+        min-width: auto; 
+        margin-right: 0;
+    }
+
+    /* Shrink content to fit small grid */
+    .project-content {
+        padding: 12px;
+    }
+
+    .project-content h3 {
+        font-size: 0.9rem; /* Smaller Title */
+        line-height: 1.2;
+        margin-bottom: 5px;
+    }
+
+    .project-content p {
+        font-size: 0.7rem; /* Tiny Text */
+        line-height: 1.3;
+        color: var(--text-secondary);
+        
+        /* Cut off text after 3 lines */
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .tech-tag {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        margin-top: 8px;
+    }
+
+    /* --- 4. VIDEOS: HORIZONTAL SWIPE (Netflix Style) --- */
+    .video-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding-bottom: 10px;
+        /* Hide Scrollbar */
+        scrollbar-width: none; 
+        -ms-overflow-style: none;
+    }
+    
+    .video-grid::-webkit-scrollbar { 
+        display: none; 
+    }
+
+    .video-card {
+        min-width: 80vw; /* Video takes 80% of width */
+        flex-shrink: 0;
+        scroll-snap-align: center;
+    }
+    
+    /* --- 5. TIMELINE FIXES --- */
+    .timeline { margin-left: 5px; padding-left: 25px; }
+    .timeline-dot { left: -30px; }
 }
+
