@@ -1,484 +1,1243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepanshu Tyagi | Portfolio</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deepanshu Tyagi — Builder · Creator · Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ═══ TOKENS ═══════════════════════════════════════════ */
+:root {
+  --bg:      #EDE8DF;
+  --bg2:     #E5DFD4;
+  --bg3:     #DAD3C7;
+  --white:   #F9F7F3;
+  --black:   #0D0D0D;
+  --mid:     #6B6760;
+  --light:   #B8B2A7;
+  --border:  #D8D2C8;
+  --blue:    #0047FF;
+  --blue-d:  rgba(0,71,255,0.1);
+  --serif:   'Playfair Display', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --shadow:  0 2px 32px rgba(13,13,13,0.1);
+}
+
+/* ═══ RESET ════════════════════════════════════════════ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+}
+a { color:inherit; text-decoration:none; }
+img { display:block; width:100%; }
+
+/* ═══ PAGE VIGNETTE — edges darkened for depth ═══════ */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 120% 120% at 50% 50%,
+      transparent 55%,
+      rgba(13,13,13,0.18) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ═══ CURTAIN ══════════════════════════════════════════ */
+#curtain {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 9000;
+  transform-origin: bottom;
+  animation: curtUp .9s cubic-bezier(.76,0,.24,1) .05s forwards;
+}
+@keyframes curtUp { to { transform: scaleY(0); } }
+
+/* ═══ CURSOR — dark, always visible ═══════════════════ */
+#cur-ring {
+  position: fixed; top:0; left:0;
+  width: 34px; height: 34px;
+  border: 2px solid rgba(13,13,13,0.55);
+  border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .28s, height .28s, border-color .28s, background .28s;
+  mix-blend-mode: screen;
+  opacity: 1 !important;
+}
+#cur-dot {
+  position: fixed; top:0; left:0;
+  width: 6px; height: 6px;
+  background: var(--black);
+  border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  mix-blend-mode: screen;
+  opacity: 1 !important;
+}
+#cur-ring.big {
+  width: 56px; height: 56px;
+  background: rgba(0,71,255,0.1);
+  border-color: var(--blue);
+}
+#cur-ring.light-mode {
+  border-color: rgba(247,247,247,0.95);
+}
+#cur-dot.light-mode { background: #fff; }
+
+/* ═══ NAV ══════════════════════════════════════════════ */
+#nav {
+  position: fixed; top:0; left:0; right:0;
+  z-index: 800; padding: 22px 0;
+  transition: background .4s, padding .35s, box-shadow .4s;
+}
+#nav.sc {
+  background: rgba(237,232,223,0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 24px rgba(13,13,13,.07);
+}
+.nw { max-width:1240px; margin:0 auto; padding:0 40px; display:flex; align-items:center; gap:14px; }
+.nlogo {
+  font-family: var(--serif); font-size:1.4rem; font-weight:900;
+  color: var(--black); letter-spacing:-.5px;
+  margin-right: auto; transition: color .2s;
+}
+.nlogo span { color:var(--blue); }
+.nlogo:hover { color:var(--blue); }
+.nlinks { display:flex; gap:34px; }
+.nlinks a {
+  font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--mid); transition:color .2s; position:relative;
+}
+.nlinks a::after {
+  content:''; position:absolute; left:0; bottom:-3px;
+  height:1.5px; width:0; background:var(--blue); transition:width .3s;
+}
+.nlinks a:hover { color:var(--black); }
+.nlinks a:hover::after { width:100%; }
+.ncta {
+  margin-left:14px; padding:9px 22px;
+  background:var(--black); color:var(--bg);
+  font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  border-radius:100px; cursor:none;
+  transition:background .25s, transform .2s;
+}
+.ncta:hover { background:var(--blue); transform:translateY(-1px); }
+
+.hbg { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:none; padding:4px; margin-left:auto; }
+.hbg span { display:block; width:24px; height:1.5px; background:var(--black); transition:transform .3s,opacity .3s; }
+.hbg.o span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.hbg.o span:nth-child(2) { opacity:0; }
+
+.mob-d {
+  position:fixed; top:0; right:-100%; z-index:790;
+  width:min(310px,82vw); height:100vh;
+  background:var(--bg);
+  border-left:1px solid var(--border);
+  padding:96px 40px 60px;
+  display:flex; flex-direction:column; gap:0;
+  transition:right .45s cubic-bezier(.25,.8,.25,1);
+  box-shadow:-20px 0 60px rgba(13,13,13,.1);
+}
+.mob-d.o { right:0; }
+.mob-ov { position:fixed; inset:0; z-index:780; background:rgba(13,13,13,.35); opacity:0; pointer-events:none; transition:opacity .4s; }
+.mob-ov.o { opacity:1; pointer-events:auto; }
+.mob-d a {
+  padding:15px 0; font-family:var(--serif);
+  font-size:1.5rem; font-weight:700; color:var(--mid);
+  border-bottom:1px solid var(--border); transition:color .2s, padding-left .25s;
+}
+.mob-d a:hover { color:var(--black); padding-left:6px; }
+.mob-d a.bl { color:var(--blue); border:none; margin-top:20px; }
+
+/* ═══ REVEAL ═══════════════════════════════════════════ */
+.rv {
+  opacity:0; transform:translateY(26px);
+  transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--d,0s);
+}
+.rv.in { opacity:1; transform:translateY(0); }
+
+/* ═══ BUTTONS ══════════════════════════════════════════ */
+.btn-p {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 30px;
+  background:var(--black); color:var(--bg);
+  font-size:.78rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  border-radius:4px; border:2px solid var(--black); cursor:none;
+  transition:background .25s,color .25s,border-color .25s,transform .2s,box-shadow .25s;
+}
+.btn-p:hover { background:var(--blue); border-color:var(--blue); transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,71,255,.22); }
+.btn-s {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 30px;
+  background:transparent; color:var(--black);
+  font-size:.78rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  border-radius:4px; border:2px solid var(--border); cursor:none;
+  transition:border-color .25s,transform .2s;
+}
+.btn-s:hover { border-color:var(--black); transform:translateY(-2px); }
+
+/* ═══ SHARED SECTION HEADER ════════════════════════════ */
+.sw { max-width:1240px; margin:0 auto; padding:0 40px; }
+.shd {
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding-bottom:18px; border-bottom:1px solid var(--border); margin-bottom:48px;
+}
+.seye { font-size:.68rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:7px; }
+.stit { font-family:var(--serif); font-weight:900; font-size:clamp(2rem,4vw,3.8rem); letter-spacing:-1.5px; line-height:1; color:var(--black); }
+.slnk { font-size:.74rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--light); border-bottom:1px solid var(--border); padding-bottom:2px; cursor:none; transition:color .2s,border-color .2s; }
+.slnk:hover { color:var(--blue); border-color:var(--blue); }
+
+/* ════════════════════════════════════════════════════════
+   FEATURED CAROUSEL — cinematic slides right→left
+   ════════════════════════════════════════════════════════ */
+.carousel-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  /* Dark gradient top so nav text always visible */
+  background: var(--black);
+}
+
+/* Slides track */
+.cs-track {
+  position: relative;
+  height: 100%;
+}
+
+/* Stack slides on top of each other */
+.cs-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: 1;
+}
+.cs-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Background image fills the slide */
+.cs-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 8s linear;
+  z-index: 2;
+  /* subtle Ken Burns while active */
+}
+.cs-slide.active .cs-img { transform: scale(1.06); }
+
+/* Rich cinematic overlay — layered gradients */
+.cs-overlay {
+  position: absolute; inset: 0;
+  z-index: 1;
+  background:
+    /* top fade for nav */
+    linear-gradient(180deg,
+      rgba(13,13,13,0.75) 0%,
+      rgba(13,13,13,0.0)  22%,
+      rgba(13,13,13,0.0)  48%,
+      rgba(13,13,13,0.88) 100%),
+    /* left vignette for text */
+    linear-gradient(90deg,
+      rgba(13,13,13,0.7) 0%,
+      transparent 60%);
+}
+
+/* Placeholder shown when no real image */
+.cs-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1a1714 0%, #2a2520 100%);
+  z-index: 1;
+}
+.cs-placeholder i { font-size: 2.5rem; color: rgba(255,255,255,.5); }
+.cs-placeholder span { font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); }
+
+/* Content positioned bottom-left */
+.cs-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 60px 64px;
+  z-index: 3;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .7s cubic-bezier(.16,1,.3,1);
+}
+.cs-slide.active .cs-content {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: .15s;
+}
+
+.cs-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 14px;
+  background: var(--blue);
+  border-radius: 100px;
+  font-size:.62rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.cs-content h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 4.5vw, 5rem);
+  letter-spacing: -2px;
+  line-height: .95;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.85), 0 0 0.5px rgba(0,0,0,0.7);
+  -webkit-text-stroke: 0.75px rgba(0,0,0,0.4);
+  margin-bottom: 14px;
+  max-width: 700px;
+}
+
+.cs-content p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 0 0.8px rgba(0,0,0,0.7);
+  -webkit-text-stroke: 0.6px rgba(0,0,0,0.4);
+  font-weight: 700;
+  line-height: 1.72;
+  max-width: 500px;
+  margin-bottom: 22px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.cs-links { display:flex; gap:10px; flex-wrap:wrap; }
+.cs-links a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 100px;
+  font-size:.65rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color: rgba(255,255,255,.6);
+  cursor:none;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.cs-links a:hover { color:#fff; border-color:rgba(255,255,255,.7); background:rgba(255,255,255,.08); }
+
+/* Slide counter + progress */
+.cs-ui {
+  position: absolute;
+  bottom: 60px; right: 64px;
+  z-index: 3;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 16px;
+}
+
+.cs-count {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: rgba(255,255,255,.35);
+  letter-spacing: 2px;
+}
+.cs-count strong { color: rgba(255,255,255,.85); font-size: 1.6rem; }
+
+/* Dot indicators */
+.cs-dots { display:flex; gap:8px; }
+.cs-dot {
+  width: 6px; height: 6px; border-radius: 3px;
+  background: rgba(255,255,255,.25);
+  transition: width .4s cubic-bezier(.16,1,.3,1), background .3s;
+  cursor: none;
+}
+.cs-dot.on { width: 28px; background: #fff; }
+
+/* Progress bar */
+.cs-progress {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: rgba(255,255,255,.08);
+  z-index: 3;
+}
+.cs-progress-fill {
+  height: 100%; width: 0;
+  background: var(--blue);
+  transition: none;
+}
+.cs-progress-fill.running {
+  transition: width var(--dur, 5s) linear;
+  width: 100%;
+}
+
+/* Prev/Next arrows */
+.cs-arrow {
+  position: absolute; top: 50%; z-index: 3;
+  width: 48px; height: 48px;
+  border: 1.5px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: rgba(13,13,13,.3);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.6);
+  font-size: .9rem;
+  cursor: none;
+  transition: border-color .2s, background .2s, color .2s, transform .2s;
+  transform: translateY(-50%);
+}
+.cs-arrow:hover { border-color:rgba(255,255,255,.7); background:rgba(13,13,13,.6); color:#fff; }
+.cs-prev { left: 32px; }
+.cs-next { right: 32px; }
+.cs-next:hover { transform: translateY(-50%) translateX(3px); }
+.cs-prev:hover { transform: translateY(-50%) translateX(-3px); }
+
+/* Slide-in animation for incoming slide */
+@keyframes slideInFromRight {
+  from { transform: translateX(60px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slideInFromLeft {
+  from { transform: translateX(-60px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.cs-slide.entering-right { animation: slideInFromRight .6s cubic-bezier(.16,1,.3,1) both; }
+.cs-slide.entering-left  { animation: slideInFromLeft  .6s cubic-bezier(.16,1,.3,1) both; }
+
+/* ═══ TICKER ═══════════════════════════════════════════ */
+.ticker {
+  overflow: hidden; background: var(--black); padding: 13px 0;
+}
+.tt {
+  display: flex; white-space: nowrap;
+  animation: tick 28s linear infinite;
+}
+.tt span { font-size:.78rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(249,247,243,.6); padding:0 22px; }
+.tt .dot { color:var(--blue); padding:0 6px; }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ═══ CURRENTLY ════════════════════════════════════════ */
+.currently { border-bottom:1px solid var(--border); }
+.curr-in {
+  max-width:1240px; margin:0 auto; padding:0 40px;
+  display:flex; align-items:stretch;
+}
+.curr-lbl {
+  padding:26px 36px 26px 0; border-right:1px solid var(--border);
+  flex-shrink:0; display:flex; align-items:center;
+  font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--light); white-space:nowrap;
+}
+.curr-items { display:flex; flex:1; }
+.ci {
+  flex:1; display:flex; align-items:center; gap:13px;
+  padding:22px 26px; border-right:1px solid var(--border);
+  cursor:none; transition:background .25s; text-decoration:none;
+  position:relative; overflow:hidden;
+}
+.ci:last-child { border-right:none; }
+.ci::before { content:''; position:absolute; inset:0; background:var(--blue-d); opacity:0; transition:opacity .3s; }
+.ci:hover::before { opacity:1; }
+.ci-icon {
+  width:36px; height:36px; border-radius:9px;
+  border:1px solid var(--border); background:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.95rem; flex-shrink:0; position:relative; z-index:1;
+  box-shadow: 0 1px 6px rgba(13,13,13,.07);
+  transition:border-color .25s;
+}
+.ci:hover .ci-icon { border-color:rgba(0,71,255,.25); }
+.ci-txt { position:relative; z-index:1; }
+.ci-txt h4 { font-size:.84rem; font-weight:600; color:var(--black); line-height:1.2; }
+.ci-txt p  { font-size:.7rem; color:var(--mid); font-weight:300; }
+.ci-live { width:6px; height:6px; border-radius:50%; background:#22c55e; animation:lv 2s infinite; margin-left:auto; flex-shrink:0; z-index:1; position:relative; }
+@keyframes lv { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)} 50%{box-shadow:0 0 0 5px rgba(34,197,94,0)} }
+
+/* ═══ HERO ════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh; padding-top: 100px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(13,13,13,.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none; z-index: 0;
+}
+.h-in {
+  position: relative; z-index: 1;
+  max-width: 1240px; margin: 0 auto;
+  padding: 50px 40px 0;
+  display: grid; grid-template-columns: 1fr 340px;
+  gap: 56px; align-items: end;
+}
+.h-brow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--light); margin-bottom:22px;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) .85s both;
+}
+.h-brow::before { content:''; width:26px; height:1.5px; background:var(--blue); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+.h-name {
+  font-family:var(--serif); font-weight:900;
+  font-size:clamp(64px,11vw,150px);
+  line-height:.92; letter-spacing:-3px; margin-bottom:26px; overflow:hidden;
+}
+.hnl { display:block; animation:nSlide .9s cubic-bezier(.16,1,.3,1) both; }
+.hnl:nth-child(1) { animation-delay:.22s; }
+.hnl:nth-child(2) { animation-delay:.36s; color:var(--blue); font-style:italic; }
+@keyframes nSlide { from{transform:translateY(110%);opacity:0} to{transform:none;opacity:1} }
+.h-desc {
+  font-size:1.02rem; color:var(--mid); font-weight:300; line-height:1.78;
+  max-width:460px; margin-bottom:32px;
+  animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .52s both;
+}
+.h-desc strong { color:var(--black); font-weight:500; }
+.h-ctas { display:flex; gap:12px; flex-wrap:wrap; animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .62s both; }
+.h-photo-w { animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .28s both; position:relative; }
+.h-photo {
+  aspect-ratio:3/4; border-radius:12px; overflow:hidden;
+  border:1px solid var(--border); background:var(--bg2);
+  box-shadow: 0 8px 40px rgba(13,13,13,.12);
+}
+.h-photo img { height:100%; object-fit:cover; object-position:center top; filter:grayscale(8%); transition:transform .6s cubic-bezier(.16,1,.3,1); }
+.h-photo:hover img { transform:scale(1.04); }
+.h-badge {
+  position:absolute; bottom:-14px; left:50%; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:7px;
+  padding:9px 18px;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:100px;
+  font-size:.72rem; font-weight:500; color:var(--mid);
+  white-space:nowrap;
+  box-shadow: 0 4px 20px rgba(13,13,13,.1);
+}
+.h-badge-dot { width:7px; height:7px; border-radius:50%; background:#22c55e; animation:lv 2s infinite; }
+.h-stats {
+  position:relative; z-index:1;
+  max-width:1240px; margin:72px auto 0; padding:0 40px 64px;
+  display:flex; gap:0;
+  border-top:1px solid var(--border); padding-top:36px;
+  animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .78s both;
+}
+.hs { flex:1; padding-right:36px; border-right:1px solid var(--border); margin-right:36px; }
+.hs:last-child { border-right:none; margin-right:0; padding-right:0; }
+.hs-n { font-family:var(--serif); font-size:2.8rem; font-weight:900; color:var(--blue); line-height:1; margin-bottom:4px; }
+.hs-l { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--light); }
+
+/* ═══ ABOUT — SPLIT ════════════════════════════════════ */
+.about { display:grid; grid-template-columns:42% 58%; min-height:82vh; border-top:1px solid var(--border); }
+.abt-img { position:relative; overflow:hidden; background:var(--bg2); }
+.abt-img img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:grayscale(10%) contrast(1.04); transition:transform .8s cubic-bezier(.16,1,.3,1); }
+.about:hover .abt-img img { transform:scale(1.03); }
+.abt-lbl { position:absolute; bottom:26px; left:26px; font-size:.6rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(13,13,13,.4); background:rgba(237,232,223,.82); padding:5px 12px; border-radius:100px; }
+.abt-txt { padding:72px 56px 72px 52px; display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--border); }
+.abt-h { font-family:var(--serif); font-weight:900; font-size:clamp(2.4rem,4.2vw,5rem); line-height:.95; letter-spacing:-2px; margin-bottom:26px; }
+.abt-h em { font-style:italic; color:var(--blue); display:block; }
+.abt-p { font-size:.96rem; color:var(--mid); line-height:1.82; font-weight:300; max-width:390px; margin-bottom:30px; }
+.abt-p strong { color:var(--black); font-weight:500; }
+.pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:38px; }
+.pill { padding:5px 13px; border:1.5px solid var(--border); border-radius:100px; font-size:.68rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--mid); cursor:default; transition:border-color .2s,color .2s; }
+.pill:hover { border-color:var(--blue); color:var(--blue); }
+.a-stats { display:flex; gap:30px; border-top:1px solid var(--border); padding-top:26px; }
+.asn { font-family:var(--serif); font-size:2.4rem; font-weight:900; color:var(--black); line-height:1; }
+.asl { font-size:.64rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--light); margin-top:3px; }
+
+/* ═══ PROJECTS ══════════════════════════════════════════ */
+.projects { padding:100px 0; background:var(--black); }
+.projects .stit { color:#F9F7F3; }
+.projects .seye { color:var(--blue); }
+.projects .shd { border-bottom-color:rgba(255,255,255,.1); }
+.projects .slnk { color:rgba(249,247,243,.3); border-bottom-color:rgba(249,247,243,.12); }
+.projects .slnk:hover { color:var(--blue); border-bottom-color:var(--blue); }
+.pgrid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(255,255,255,.08); }
+.pgrid>* { background:var(--black); }
+.pc { display:block; padding:44px; cursor:none; position:relative; overflow:hidden; transition:background .3s; }
+.pc:hover { background:#161616; }
+.pc::before { content:''; position:absolute; inset:0; background:var(--blue-d); opacity:0; transition:opacity .35s; }
+.pc:hover::before { opacity:1; }
+.pcn { font-family:var(--serif); font-size:5rem; font-weight:900; color:rgba(255,255,255,.04); line-height:1; margin-bottom:14px; position:relative; z-index:1; }
+.pcc { font-size:.64rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; position:relative; z-index:1; }
+.pc h3 { font-family:var(--serif); font-size:clamp(1.6rem,2.3vw,2.2rem); font-weight:900; color:#F9F7F3; line-height:1.1; margin-bottom:12px; position:relative; z-index:1; transition:color .25s; }
+.pc:hover h3 { color:var(--blue); }
+.pc p { font-size:.875rem; color:rgba(249,247,243,.45); line-height:1.72; font-weight:300; margin-bottom:22px; max-width:360px; position:relative; z-index:1; }
+.ptags { display:flex; flex-wrap:wrap; gap:7px; position:relative; z-index:1; }
+.ptags span { padding:4px 12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:100px; font-size:.62rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:rgba(249,247,243,.3); }
+.parr { position:absolute; bottom:38px; right:38px; font-size:1.5rem; color:rgba(249,247,243,.18); z-index:1; transition:color .3s,transform .3s; }
+.pc:hover .parr { color:var(--blue); transform:translate(5px,-5px); }
+
+/* ═══ VENTURES ═════════════════════════════════════════ */
+.ventures { padding:100px 0; }
+.vpnls { display:flex; min-height:64vh; border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); }
+.vp { flex:1; position:relative; overflow:hidden; cursor:none; transition:flex .7s cubic-bezier(.25,.8,.25,1); }
+.vpnls:hover .vp { flex:.44; }
+.vpnls .vp:hover { flex:1.12; }
+.vpbg { position:absolute; inset:0; transition:transform .8s cubic-bezier(.16,1,.3,1); }
+.vp:hover .vpbg { transform:scale(1.05); }
+.vpov { position:absolute; inset:0; }
+.vp1 .vpbg { background:linear-gradient(145deg,#0a0804 0%,#1e1608 60%,#100d06 100%); }
+.vp1 .vpov { background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.18) 100%); }
+.vp2 .vpbg { background:linear-gradient(145deg,#060b14 0%,#0a1828 60%,#060d18 100%); }
+.vp2 .vpov { background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.18) 100%); }
+.vpdiv { position:absolute; top:0; right:0; width:1px; height:100%; background:rgba(255,255,255,.07); z-index:2; }
+.vpcnt { position:relative; z-index:3; height:100%; padding:44px; display:flex; flex-direction:column; justify-content:flex-end; }
+.vpbdg { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border:1px solid; border-radius:100px; font-size:.62rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; align-self:flex-start; margin-bottom:auto; }
+.vp1 .vpbdg { border-color:rgba(212,175,55,.45); color:#D4AF37; }
+.vp2 .vpbdg { border-color:rgba(34,197,94,.45); color:#22c55e; }
+.vpbd { width:5px; height:5px; border-radius:50%; animation:lv 2s infinite; }
+.vp1 .vpbd { background:#D4AF37; } .vp2 .vpbd { background:#22c55e; }
+.vpgn { font-family:var(--serif); font-size:6.5rem; font-weight:900; color:rgba(255,255,255,.04); line-height:1; margin-bottom:-10px; transition:color .4s; }
+.vp:hover .vpgn { color:rgba(255,255,255,.07); }
+.vpnm { font-family:var(--serif); font-size:clamp(1.9rem,3.2vw,4rem); font-weight:900; color:#fff; line-height:.97; margin-bottom:11px; }
+.vpd { font-size:.85rem; color:rgba(255,255,255,.45); font-weight:300; line-height:1.7; max-width:300px; margin-bottom:22px; }
+.vpcta { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.35); border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:2px; display:inline-block; transition:color .25s,border-color .25s; }
+.vp1:hover .vpcta { color:#D4AF37; border-color:#D4AF37; }
+.vp2:hover .vpcta { color:#22c55e; border-color:#22c55e; }
+
+/* ═══ JOURNEY ══════════════════════════════════════════ */
+.journey { padding:100px 0; background:var(--bg2); }
+.jgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.ji { background:var(--bg2); padding:26px 28px; cursor:default; transition:background .25s; }
+.ji:hover { background:var(--white); }
+.jt { display:inline-block; font-size:.6rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:3px 10px; border-radius:100px; margin-bottom:11px; }
+.ji.wk .jt { background:rgba(0,71,255,.08); color:var(--blue); }
+.ji.hk .jt { background:rgba(139,92,246,.1); color:#8b5cf6; }
+.ji.ed .jt { background:rgba(34,197,94,.08); color:#16a34a; }
+.jd { font-size:.63rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--light); margin-bottom:5px; }
+.ji h3 { font-size:.9rem; font-weight:600; color:var(--black); margin-bottom:3px; line-height:1.35; }
+.ji h4 { font-size:.77rem; color:var(--mid); font-weight:400; margin-bottom:6px; }
+.ji p  { font-size:.74rem; color:var(--light); line-height:1.65; font-weight:300; }
+.jgold { color:#8B6914 !important; }
+
+/* ═══ CONTACT ══════════════════════════════════════════ */
+.contact { padding:140px 0; text-align:center; position:relative; overflow:hidden; border-top:1px solid var(--border); }
+.contact::before { content:'HI'; font-family:var(--serif); font-weight:900; font-size:40vw; color:rgba(13,13,13,.03); position:absolute; top:50%; left:50%; transform:translate(-50%,-52%); pointer-events:none; line-height:1; letter-spacing:-4px; }
+.ceye { font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); margin-bottom:18px; }
+.ctit { font-family:var(--serif); font-weight:900; font-size:clamp(3.5rem,9vw,10rem); line-height:.92; letter-spacing:-3px; color:var(--black); margin-bottom:22px; }
+.ctit em { font-style:italic; color:var(--blue); display:block; }
+.csub { font-size:1rem; color:var(--mid); font-weight:300; margin-bottom:42px; }
+.cbtns { display:flex; gap:13px; justify-content:center; flex-wrap:wrap; margin-bottom:50px; }
+.csoc { display:flex; gap:22px; justify-content:center; }
+.csoc a { width:44px; height:44px; border:1.5px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.95rem; color:var(--mid); cursor:none; transition:color .2s,border-color .2s,transform .2s; box-shadow:0 2px 10px rgba(13,13,13,.06); }
+.csoc a:hover { color:var(--blue); border-color:var(--blue); transform:translateY(-3px); }
+
+/* ═══ FOOTER ════════════════════════════════════════════ */
+footer { border-top:1px solid var(--border); padding:22px 0; }
+footer .sw { display:flex; justify-content:space-between; align-items:center; }
+footer p { font-size:.7rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--light); }
+footer a { color:var(--light); transition:color .2s; } footer a:hover { color:var(--blue); }
+
+/* ═══ RESPONSIVE ════════════════════════════════════════ */
+@media(max-width:1100px) {
+  .jgrid { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:900px) {
+  .nlinks,.ncta { display:none; }
+  .hbg { display:flex; }
+  .h-in { grid-template-columns:1fr; gap:36px; }
+  .h-photo-w { max-width:280px; margin:0 auto; }
+  .h-stats { flex-wrap:wrap; }
+  .hs { flex:0 0 50%; margin-right:0; border-right:none; padding-right:0; border-bottom:1px solid var(--border); margin-bottom:20px; padding-bottom:20px; }
+  .hs:nth-last-child(-n+2) { border-bottom:none; margin-bottom:0; }
+  .curr-in { flex-direction:column; }
+  .curr-lbl { border-right:none; border-bottom:1px solid var(--border); padding:18px 0; }
+  .curr-items { flex-wrap:wrap; }
+  .ci { flex:0 0 50%; border-top:1px solid var(--border); }
+  .about { grid-template-columns:1fr; }
+  .abt-img { height:55vw; }
+  .abt-txt { border-left:none; border-top:1px solid var(--border); padding:50px 36px; }
+  .pgrid { grid-template-columns:1fr; }
+  .vpnls { flex-direction:column; min-height:auto; }
+  .vpnls:hover .vp,.vpnls .vp:hover { flex:1; }
+  .vp { min-height:60vw; }
+  .vpdiv { display:none; }
+  .jgrid { grid-template-columns:1fr; }
+  .cs-content { padding:40px 36px; }
+  .cs-ui { bottom:40px; right:36px; }
+  .cs-arrow { display:none; }
+}
+@media(max-width:600px) {
+  .sw { padding:0 20px; }
+  .nw { padding:0 20px; }
+  .projects,.ventures,.journey,.contact { padding:72px 0; }
+  .h-in { padding:40px 20px 0; }
+  .h-stats { padding:0 20px 48px; margin-top:44px; }
+  .curr-in { padding:0 20px; }
+  .ci { flex:0 0 100%; }
+  .abt-txt { padding:40px 20px; }
+  .pc { padding:28px; }
+  .vpcnt { padding:28px; }
+  .ji { padding:18px; }
+  .cs-content { padding:28px 24px; }
+  .cs-content h2 { font-size:clamp(1.8rem,8vw,3rem); }
+  .ctit { font-size:clamp(2.8rem,15vw,5.5rem); letter-spacing:-2px; }
+  footer .sw { flex-direction:column; gap:8px; text-align:center; }
+  body { cursor:default; }
+  #cur-ring,#cur-dot { display:none; }
+}
+</style>
 </head>
 <body>
 
-    <div class="container">
-        <section class="bento-grid">
-            
-            <div class="bento-card hero-main" onmousemove="handleMouseMove(event)">
-                <div class="card-content">
-                    <p>Hello, I am</p>
-                    <h1>Deepanshu <br><span class="highlight">Tyagi</span></h1>
-                    <p style="margin-top: 20px;">
-                        I'm really passionate about AI , and I've also got experience in ML, Cybersecurity, Frontend development, Video editing,Hardware projects.
-                        
-                    </p>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=deepanshutyagi0784@gmail.com" class="btn-primary" style="display:inline-block; margin-top:30px;">Let's Talk</a>
-                    <a href="mailto:deepanshutyagi0784@gmail.com" class="muted-link" style="display:inline-block; margin-top:20px;">   
-                    </a>
-                    <div class="hero-tagline">
-                        <span class="tagline-small">its all about</span>
-                        <span class="tagline-large">collective consiouness</span>
-                    </div>
-                </div>
-            </div>
+<div id="curtain"></div>
+<div id="cur-ring"></div>
+<div id="cur-dot"></div>
 
-            <div class="bento-card hero-photo" onmousemove="handleMouseMove(event)">
-                <img src="assets/images/profile.jpg" alt="Deepanshu">
-            </div>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nw">
+    <a href="#" class="nlogo">D<span>.</span>T</a>
+    <div class="nlinks">
+      <a href="#hero">Home</a>
+      <a href="#projects">Work</a>
+      <a href="#ventures">Ventures</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="Deepanshu_Resume.pdf" target="_blank" class="ncta">Resume ↗</a>
+    <button class="hbg" id="hbg"><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-d" id="mobd">
+  <a href="#hero"     data-c>Home</a>
+  <a href="#projects" data-c>Work</a>
+  <a href="#ventures" data-c>Ventures</a>
+  <a href="#journey"  data-c>Journey</a>
+  <a href="#contact"  data-c>Contact</a>
+  <a href="Deepanshu_Resume.pdf" target="_blank" class="bl">Resume ↗</a>
+  
+</div>
+<div class="mob-ov" id="mobov"></div>
 
-            <div class="bento-card hero-socials" onmousemove="handleMouseMove(event)">
-                <a href="https://github.com/deepanshutyagi86" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/deepanshutyagi86" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:deepanshutyagi0784@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
-            </div>
+<!-- ════════════════════════════════════════════════════
+     FEATURED CAROUSEL — full viewport, top of page
+     ════════════════════════════════════════════════════ -->
+<section class="carousel-section" id="featured">
 
-            <div class="bento-card hero-stats" onmousemove="handleMouseMove(event)">
-                <div class="card-content stat-item">
-                    <h3>10+</h3>
-                    <p>Hackathons</p>
-                </div>
-                <div class="card-content stat-item">
-                    <h3>3+</h3>
-                    <p>Major Events Organized</p>
-                </div>
-                <div class="card-content stat-item">
-                    <h3>12+</h3>
-                    <p>Projects</p>
-                </div>
-            </div>
-            
-        </section>
-        <section id="projects">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-            </div>
-            <div class="projects-grid">
-                
-                <div class="project-card" onmousemove="handleMouseMove(event)">
-                    <a href="https://drive.google.com/file/d/1JfOnPJd9csn9nvrREnOiFM_9N69mE19V/view?usp=share_link"
-                       target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Union Bank Fraud Detection document">
-                      <div class="project-content">
-                        <h3>Union Bank Fraud Detection</h3>
-                        <p>Industrial project to secure financial data against SQLi and XSS attacks.</p>
-                        <span class="tech-tag">Cyber Security</span>
-                        <span class="tech-tag">Burp Suite</span>
-                      </div>
-                    </a>
-                </div>
+  <div class="cs-track" id="csTrack">
 
-                <div class="project-card" onmousemove="handleMouseMove(event)">
-                    <div class="project-content">
-                        <h3>MeetAssist</h3>
-                        <p>Universal AI assistant for video conferencing integrated with Trello.</p>
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Cloudflare</span>
-                    </div>
-                </div>
+    <!-- SLIDE 1 — Trickyman Interview (HERO slide) -->
+    <div class="cs-slide active" data-index="0">
+      <!-- Replace with: assets/images/featured/trickyman.jpg -->
+      <img class="cs-img" src="assets/images/featured/trickyman.jpg" alt="Interview with Trickyman">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/trickyman.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">🎙️ Live Interview · Microsoft Campus</div>
+        <h2>Interviewed<br>Trickyman</h2>
+        <p>Hosted Piyush Sharma at Microsoft as part of Ignite Room — a candid conversation on content creation, building an audience, and the entrepreneurship journey from zero.</p>
+        <div class="cs-links">
+          <a href="https://www.instagram.com/becoming.beacon" target="_blank">Instagram ↗</a>
+          <a href="https://www.linkedin.com/in/deepanshutyagi86/" target="_blank">LinkedIn ↗</a>
+          <a href="#hero">My Portfolio ↓</a>
+        </div>
+      </div>
+    </div>
 
-                <div class="project-card" onmousemove="handleMouseMove(event)">
-                    <a href="https://sentiment-api-v6wr.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link">
-                      <div class="project-content">
-                        <h3>Tweet Sentiment Analyzer</h3>
-                        <p>NLP model to classify X posts as positive or negative using Logistic Regression.</p>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">NLP</span>
-                      </div>
-                    </a>
-                </div>
-                <div class="project-card" onmousemove="handleMouseMove(event)">
-                    <a href="https://user-conversion-1.onrender.com"
-                       target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Union Bank Fraud Detection document">
-                      <div class="project-content">
-                        <h3>User Conversion indentification</h3>
-                        <p>Conversion Rate Model predicting user behavior & boosting conversions. Built with logistic regression.</p>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Logistic Regression</span>
-                      </div>
-                    </a>
-                </div>
+    <!-- SLIDE 2 — Govt School Teaching -->
+    <div class="cs-slide" data-index="1">
+      <!-- Replace: assets/images/featured/school.jpg -->
+      <img class="cs-img" src="assets/images/featured/school.jpg" alt="Teaching at School">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/school.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">🏫 Workshop · Dec 2025</div>
+        <h2>Teaching the<br>Next Generation</h2>
+        <p>Conducted a hands-on tech workshop at a Government School in New Delhi — inspiring students to explore engineering and technology from the ground up.</p>
+        <div class="cs-links">
+          <a href="#journey">See Full Journey ↓</a>
+        </div>
+      </div>
+    </div>
 
-            </div>
-        </section>
-        
-        <section id="videos">
-            <div class="section-header">
-                <h2 class="section-title">Video Production</h2>
-                <p style="color: var(--text-secondary); margin-top: 10px;">
-                    Highlights from my work as Video Lead at Ignite Room & Freelance Projects.
-                </p>
-            </div>
-            
-            <div class="video-grid">
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1MUm5l5ms2zmdV_QS1A2AIFkeiGzbt7d6/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">Cinematic Edit</h4>
-                        <span class="tech-tag">Premiere Pro</span>
-                        <span class="tech-tag">Color Grading</span>
-                    </div>
-                 </div>
+    <!-- SLIDE 3 — IIT Kanpur Win -->
+    <div class="cs-slide" data-index="2">
+      <!-- Replace: assets/images/featured/hackathon.jpg -->
+      <img class="cs-img" src="assets/images/featured/hackathon.jpg" alt="Techkriti IIT Kanpur">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/hackathon.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">🏆 1st Place · IIT Kanpur</div>
+        <h2>Won Techkriti<br>2025</h2>
+        <p>Secured 1st place in ECDC — Galactic Dodger at Techkriti, IIT Kanpur's annual techfest. Competed with Team ROBOGYAN and also took CTF Runner-Up.</p>
+        <div class="cs-links">
+          <a href="#projects">See My Projects ↓</a>
+        </div>
+      </div>
+    </div>
 
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1I8t1nVO5OtxD58sfS-S21nrJmF8B4V5F/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">Cinematic Edit</h4>
-                        <span class="tech-tag">setup demo</span>
-                        <span class="tech-tag">Transitions</span>
-                    </div>
-                 </div>
+    <!-- SLIDE 4 — HackArena Organiser -->
+    <div class="cs-slide" data-index="3">
+      <!-- Replace: assets/images/featured/hackarena.jpg -->
+      <img class="cs-img" src="assets/images/featured/hackarena.jpg" alt="HackArena IIIT Delhi">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/hackarena.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">⚡ Organiser · Ignite Room</div>
+        <h2>HackArena<br>IIIT Delhi</h2>
+        <p>Core team member and Video Lead for HackArena — a 2-day hackathon at IIIT Delhi. Managed end-to-end media, logistics and execution for 100+ participants.</p>
+        <div class="cs-links">
+          <a href="https://www.instagram.com/becoming.beacon" target="_blank">Follow @becoming.beacon ↗</a>
+        </div>
+      </div>
+    </div>
 
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1VnkMJy13OblyaCr3TEcEZT6QIny7E8IN/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">Innova-Ending</h4>
-                        <span class="tech-tag">Adobe Premiere Pro</span>
-                        <span class="tech-tag">Transitions</span>
-                    </div>  
-                 </div>
-                
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1OU-1kw9zM96e4_P2o63mOKpC8vuFjqRO/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">My-Edit</h4>
-                        <span class="tech-tag">Adobe Premiere Pro</span>
-                        <span class="tech-tag">Shot</span>
-                    </div>  
-                 </div> 
+    <!-- SLIDE 5 — Ignite n Initiate -->
+    <div class="cs-slide" data-index="4">
+      <!-- Replace: assets/images/featured/ignite.jpg -->
+      <img class="cs-img" src="assets/images/featured/ignite.jpg" alt="Ignite n Initiate">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/ignite.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">🔥 Ignite Room · Aug 2025</div>
+        <h2>Ignite n<br>Initiate</h2>
+        <p>Coordinated Ignite n Initiate — a tech community meetup that brought together builders, creators and engineers. Part of Ignite Room's growing presence at IIIT Delhi.</p>
+        <div class="cs-links">
+          <a href="https://www.instagram.com/ignite_room" target="_blank">Ignite Room ↗</a>
+        </div>
+      </div>
+    </div>
 
+    <!-- SLIDE 6 — DSCI CTF -->
+    <div class="cs-slide" data-index="5">
+      <!-- Replace: assets/images/featured/dsci.jpg -->
+      <img class="cs-img" src="assets/images/featured/innova.jpg" alt="DSCI CTF">
+      <div class="cs-placeholder">
+        <i class="fas fa-camera"></i>
+        <span>Add photo → assets/images/featured/dsci.jpg</span>
+      </div>
+      <div class="cs-overlay"></div>
+      <div class="cs-content">
+        <div class="cs-badge">🔐 INNOVA 2024</div>
+        <h2>GDGC<br>IIIT-delhi</h2>
+        <p>Volunteer in the community to brought up this event</p>
+        <div class="cs-links">
+          <a href="#projects">See Security Work ↓</a>
+        </div>
+      </div>
+    </div>
 
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1DaqEvvu5LuBWBxp4mF6Xvn3Az7RF8osb/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">HackArena Promo</h4>
-                        <span class="tech-tag">After Effects</span>
-                        <span class="tech-tag">Sound Design</span>
-                    </div>
-                 </div>
+  </div><!-- /cs-track -->
 
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1KtK22I-DB117RJHEySx1-yd1bcB_n-Yj/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">Reveal Merchandising</h4>
-                        <span class="tech-tag">Adobe Premiere Pro</span>
-                        <span class="tech-tag">Motion Graphics</span>
-                    </div>
-                 </div>
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/1mLnoM6TxhCUNu2j0mAQD2SMtcAOa0B8S/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">Rise of the Dragon</h4>
-                        <span class="tech-tag">Adobe Premiere Pro</span>
-                        <span class="tech-tag">Adobe Photoshop</span>
-                    </div>
-                 </div>
-                 <div class="video-card" onmousemove="handleMouseMove(event)">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe src="https://drive.google.com/file/d/15ht5yBNKy18-t5j3reArPQuliI3rdiyX/preview" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" 
-                                allow="autoplay"></iframe>
-                    </div>
-                    <div style="padding: 15px; background: var(--card-bg);">
-                        <h4 style="margin-bottom:5px;">IIIT Delhi Promo</h4>
-                        <span class="tech-tag">After Effects</span>
-                        <span class="tech-tag">Dynamic Transitions</span>
-                    </div>
-                    
-                 </div>
-            </div>
-        </section>
-        <section id="experience">
-            <div class="section-header">
-                <h2 class="section-title">The Journey</h2>
-            </div>
-            
-            <div class="timeline">
-                
-                <div class="timeline-item active">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">5 Dec 2025</span>
-                        <h3>Mentor: School Workshop</h3>
-                        <h4>Government School, New Delhi</h4>
-                        <p>Conducted a hands-on tech workshop for students to inspire future engineers.</p>
-                    </div>
-                </div>
+  <!-- Prev/Next -->
+  <button class="cs-arrow cs-prev" id="csPrev">&#8592;</button>
+  <button class="cs-arrow cs-next" id="csNext">&#8594;</button>
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">4 Dec 2025</span>
-                        <h3>Participant - DSCI CTF-2025</h3>
-                        <h4>The Pullman, Aerocity</h4>
-                        <p>Competed in advanced Network Forensics challenges at the DSCI Hackathon.</p>
-                    </div>
-                </div>
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Nov 2025</span>
-                        <h3>Internship Completion</h3>
-                        <h4>Hackveda Solutions PVT LTD</h4>
-                        <p>Completed 3 month as a Data Scientist and Cyber-Security Analyst intern at hackveda</p>
-                    </div>
-                </div>
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Oct 2025</span>
-                        <h3>Project Completion: Fraud Detection</h3>
-                        <h4>Union Bank of India / Hackveda</h4>
-                        <p>Successfully delivered the Cyber Threat Prevention System. Performed SQLi, XSS, and ARP spoofing tests.</p>
-                    </div>
-                </div>
+  <!-- Dots + counter -->
+  <div class="cs-ui">
+    <div class="cs-count"><strong id="csNum">01</strong> / 06</div>
+    <div class="cs-dots" id="csDots"></div>
+  </div>
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">24 Aug 2025</span>
-                        <h3>Core Team Member: Ignite n Initiate</h3>
-                        <h4>Ignite Room, IIIT Delhi</h4>
-                        <p>Coordinated the tech community meetup event.</p>
-                    </div>
-                </div>
+  <!-- Progress bar -->
+  <div class="cs-progress"><div class="cs-progress-fill" id="csBar"></div></div>
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">28 July 2025</span>
-                        <h3>Started Cyber Security Internship</h3>
-                        <h4>Hackveda Solutions Pvt. Ltd.</h4>
-                        <p>Began 3-month industrial training on financial security protocols.</p>
-                    </div>
-                </div>
+</section>
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">28-29 June 2025</span>
-                        <h3>Core Team & Video Editing Lead: HackArena</h3>
-                        <h4>Ignite Room, IIIT Delhi</h4>
-                        <p>Executed logistics and media coverage for the major 2-day hackathon.</p>
-                    </div>
-                </div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tt">
+    <span>AI &amp; Machine Learning</span><span class="dot">·</span>
+    <span>Cybersecurity</span><span class="dot">·</span>
+    <span>Content Creator</span><span class="dot">·</span>
+    <span>@becoming.beacon</span><span class="dot">·</span>
+    <span>Ignite Room</span><span class="dot">·</span>
+    <span>Data Science</span><span class="dot">·</span>
+    <span>Flutter</span><span class="dot">·</span>
+    <span>Builder</span><span class="dot">·</span>
+    <span>AI &amp; Machine Learning</span><span class="dot">·</span>
+    <span>Cybersecurity</span><span class="dot">·</span>
+    <span>Content Creator</span><span class="dot">·</span>
+    <span>@becoming.beacon</span><span class="dot">·</span>
+    <span>Ignite Room</span><span class="dot">·</span>
+    <span>Data Science</span><span class="dot">·</span>
+    <span>Flutter</span><span class="dot">·</span>
+    <span>Builder</span><span class="dot">·</span>
+  </div>
+</div>
 
-                <div class="timeline-item edu">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">June 2025</span>
-                        <h3>Cert: Intro to Databases</h3>
-                        <h4>Meta / Coursera</h4>
-                        <p>Gained proficiency in SQL and database management.</p>
-                    </div>
-                </div>
+<!-- CURRENTLY -->
+<div class="currently rv">
+  <div class="curr-in">
+    <span class="curr-lbl">Currently Active</span>
+    <div class="curr-items">
+      <a href="https://www.instagram.com/ignite_room" target="_blank" class="ci">
+        <div class="ci-icon">🔥</div>
+        <div class="ci-txt"><h4>Ignite Room</h4><p>Core Team · IIIT Delhi</p></div>
+        <span class="ci-live"></span>
+      </a>
+      <a href="https://www.instagram.com/becoming.beacon" target="_blank" class="ci">
+        <div class="ci-icon"><i class="fab fa-instagram" style="color:#E1306C"></i></div>
+        <div class="ci-txt"><h4>@becoming.beacon</h4><p>Creating on Instagram</p></div>
+        <span class="ci-live"></span>
+      </a>
+      <a href="https://www.youtube.com/@becoming.beacon" target="_blank" class="ci">
+        <div class="ci-icon"><i class="fab fa-youtube" style="color:#FF0000"></i></div>
+        <div class="ci-txt"><h4>BB</h4><p>Building on YouTube</p></div>
+        <span class="ci-live"></span>
+      </a>
+      <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank" class="ci">
+        <div class="ci-icon"><i class="fab fa-linkedin" style="color:#0A66C2"></i></div>
+        <div class="ci-txt"><h4>LinkedIn</h4><p>Sharing &amp; connecting</p></div>
+        <span class="ci-live"></span>
+      </a>
+    </div>
+  </div>
+</div>
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">25 May 2025</span>
-                        <h3>Core Team & Video Editing Lead: Pre-meetup HackArena</h3>
-                        <h4>Ignite Room, IIIT Delhi</h4>
-                        <p>Managed pre-event operations.</p>
-                    </div>
-                </div>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="h-in">
+    <div>
+      <div class="h-brow">BTech CSE · GGSIPU · New Delhi · 2025</div>
+      <h1 class="h-name">
+        <span class="hnl">Deepanshu</span>
+        <span class="hnl">Tyagi.</span>
+      </h1>
+      <p class="h-desc">
+        <strong>AI Engineer. Content Creator. Builder.</strong> Passionate about machine learning, cybersecurity, and creating things that connect people — currently building two ventures and growing @becoming.beacon.
+      </p>
+      <div class="h-ctas">
+        <a href="#projects" class="btn-p mag">See My Work</a>
+        <a href="#ventures" class="btn-s mag">Ventures ↗</a>
+      </div>
+    </div>
+    <div class="h-photo-w">
+      <div class="h-photo">
+        <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi"
+             onerror="this.parentElement.style.background='var(--bg2)'">
+      </div>
+      <div class="h-badge"><span class="h-badge-dot"></span>Open to opportunities</div>
+    </div>
+  </div>
+  <div class="h-stats rv" style="--d:.5s">
+    <div class="hs"><div class="hs-n">10+</div><div class="hs-l">Hackathons</div></div>
+    <div class="hs"><div class="hs-n">3+</div><div class="hs-l">Events Organised</div></div>
+    <div class="hs"><div class="hs-n">12+</div><div class="hs-l">Projects Built</div></div>
+    <div class="hs"><div class="hs-n">8+</div><div class="hs-l">Videos Produced</div></div>
+  </div>
+</section>
 
-                <div class="timeline-item edu">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">May 2025</span>
-                        <h3>Cert: Foundations of Project Management</h3>
-                        <h4>Google / Coursera</h4>
-                        <p>Learned Agile methodologies and project execution.</p>
-                    </div>
-                </div>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="abt-img rv">
+    <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi" onerror="this.style.display='none'">
+    <div class="abt-lbl">Deepanshu Tyagi · 2025</div>
+  </div>
+  <div class="abt-txt rv" style="--d:.1s">
+    <span class="seye">The Person</span>
+    <h2 class="abt-h">Builder.<br><em>Creator.</em><br>Engineer.</h2>
+    <p class="abt-p">BTech CSE at GGSIPU, driven by curiosity and the need to <strong>build things that matter</strong>. Passionate about AI and ML, with hands-on experience in Cybersecurity, Data Science, and content creation.</p>
+    <div class="pills">
+      <span class="pill">Python</span><span class="pill">TensorFlow</span>
+      <span class="pill">Burp Suite</span><span class="pill">Flutter</span>
+      <span class="pill">OWASP ZAP</span><span class="pill">Scikit-learn</span>
+      <span class="pill">FastAPI</span><span class="pill">Kali Linux</span>
+      <span class="pill">Premiere Pro</span>
+    </div>
+    <div class="a-stats">
+      <div><div class="asn">10+</div><div class="asl">Hackathons</div></div>
+      <div><div class="asn">12+</div><div class="asl">Projects</div></div>
+      <div><div class="asn">3+</div><div class="asl">Events Led</div></div>
+    </div>
+  </div>
+</section>
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Apr 2025</span>
-                        <h3>Joined Core Team</h3>
-                        <h4>Ignite Room</h4>
-                        <p>Appointed as Video Editor Lead & Core Team member.</p>
-                    </div>
-                </div>
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="sw">
+    <div class="shd rv">
+      <div><span class="seye">Selected Work</span><h2 class="stit">Projects</h2></div>
+      <a href="https://github.com/deepanshutyagi86" target="_blank" class="slnk">All on GitHub ↗</a>
+    </div>
+  </div>
+  <div class="pgrid">
+    <a href="https://drive.google.com/file/d/1JfOnPJd9csn9nvrREnOiFM_9N69mE19V/view" target="_blank" class="pc rv">
+      <div class="pcn">01</div>
+      <p class="pcc">Cybersecurity · Industrial Project</p>
+      <h3>Union Bank of India<br>Fraud Detection</h3>
+      <p>Delivered a Cyber Threat Prevention System for Union Bank — SQLi, XSS, ARP spoofing, session hijacking via OWASP ZAP and Burp Suite.</p>
+      <div class="ptags"><span>Burp Suite</span><span>OWASP ZAP</span><span>Wireshark</span><span>Kali Linux</span></div>
+      <span class="parr">↗</span>
+    </a>
+    <div class="pc rv" style="--d:.08s">
+      <div class="pcn">02</div>
+      <p class="pcc">AI · Flutter · Top 10 INNERVE9</p>
+      <h3>MeetAssist</h3>
+      <p>Universal AI assistant for video conferencing — integrates with Trello, secured via Cloudflare. Top 10 Finalist at INNERVE9 Techfest, AIT Pune.</p>
+      <div class="ptags"><span>Flutter</span><span>Cloudflare</span><span>AI APIs</span><span>Trello</span></div>
+      <span class="parr" style="opacity:.2">—</span>
+    </div>
+  </div>
+</section>
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Apr 2025</span>
-                        <h3>Runner Up - DROID 7.0</h3>
-                        <h4>Mody University</h4>
-                        <p>Secured 2nd place in 'Entrepreneur's Point' pitching an AR Tech concept.</p>
-                    </div>
-                </div>
+<!-- VENTURES -->
+<section class="ventures" id="ventures">
+  <div class="sw">
+    <div class="shd rv"><div><span class="seye">What I'm Building Next</span><h2 class="stit">Ventures</h2></div></div>
+    <div class="vpnls">
+      <a href="ecommerce.html" class="vp vp1 pl">
+        <div class="vpbg"></div><div class="vpov"></div><div class="vpdiv"></div>
+        <div class="vpcnt">
+          <span class="vpbdg"><span class="vpbd"></span>Coming Soon</span>
+          <div class="vpgn">01</div>
+          <h3 class="vpnm">E-Commerce<br>Venture</h3>
+          <p class="vpd">A premium digital storefront — curated products, seamless checkout, built for the next generation of shoppers.</p>
+          <span class="vpcta">Explore the vision ↗</span>
+        </div>
+      </a>
+      <a href="flatmates.html" class="vp vp2 pl">
+        <div class="vpbg"></div><div class="vpov"></div>
+        <div class="vpcnt">
+          <span class="vpbdg"><span class="vpbd"></span>Coming Soon</span>
+          <div class="vpgn">02</div>
+          <h3 class="vpnm">FlatMates<br>Community</h3>
+          <p class="vpd">Finding a flatmate shouldn't feel like a gamble. A trusted platform connecting people to their ideal living situation.</p>
+          <span class="vpcta">Join the waitlist ↗</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Mar 2025</span>
-                        <h3>Participant - Hackathon</h3>
-                        <h4>Graphic Era College, Dehradun</h4>
-                        <p>Competed in a rigorous hackathon environment on innovative tech solutions.</p>
-                    </div>
-                </div>
+<!-- JOURNEY -->
+<section class="journey" id="journey">
+  <div class="sw"><div class="shd rv"><div><span class="seye">Experience &amp; Achievements</span><h2 class="stit">Journey</h2></div></div></div>
+  <div class="jgrid">
+    <div class="ji wk rv"><span class="jt">Workshop</span><div class="jd">Dec 2025</div><h3>Mentor — School Workshop</h3><h4>Govt School, New Delhi</h4><p>Hands-on tech workshop inspiring the next generation.</p></div>
+    <div class="ji hk rv" style="--d:.04s"><span class="jt">Hackathon</span><div class="jd">Dec 2025</div><h3>Participant — DSCI CTF 2025</h3><h4>The Pullman, Aerocity</h4><p>Advanced Network Forensics challenges.</p></div>
+    <div class="ji wk rv" style="--d:.08s"><span class="jt">Internship</span><div class="jd">Jul–Nov 2025</div><h3>Cyber Security Intern</h3><h4>Hackveda Solutions</h4><p>3 months as Data Scientist &amp; Cyber-Security Analyst.</p></div>
+    <div class="ji wk rv"><span class="jt">Delivery</span><div class="jd">Oct 2025</div><h3>Fraud Detection Delivered</h3><h4>Union Bank of India</h4><p>Cyber Threat Prevention System delivered.</p></div>
+    <div class="ji wk rv" style="--d:.04s"><span class="jt">Event</span><div class="jd">Jun 2025</div><h3>Video Lead — HackArena</h3><h4>Ignite Room · IIIT Delhi</h4><p>End-to-end media for the 2-day hackathon.</p></div>
+    <div class="ji wk rv" style="--d:.08s"><span class="jt">Role</span><div class="jd">Apr 2025</div><h3>Core Team — Ignite Room</h3><h4>IIIT Delhi</h4><p>Appointed Video Editor Lead &amp; Core Team member.</p></div>
+    <div class="ji hk rv"><span class="jt">🏆 Win</span><div class="jd">Mar 2025</div><h3 class="jgold">1st Place — Techkriti</h3><h4>IIT Kanpur</h4><p>Won ECDC (Galactic Dodger) with Team ROBOGYAN.</p></div>
+    <div class="ji hk rv" style="--d:.04s"><span class="jt">Finalist</span><div class="jd">Feb 2025</div><h3>Top 10 — INNERVE9</h3><h4>AIT Pune</h4><p>Built MeetAssist with Cloudflare for sponsored track.</p></div>
+    <div class="ji hk rv" style="--d:.08s"><span class="jt">Runner Up</span><div class="jd">Apr 2025</div><h3>Runner Up — DROID 7.0</h3><h4>Mody University</h4><p>2nd pitching an AR Tech concept.</p></div>
+    <div class="ji ed rv"><span class="jt">Cert</span><div class="jd">Feb 2025</div><h3>Advanced Learning Algorithms</h3><h4>DeepLearning.AI / Coursera</h4><p>Neural Networks &amp; Decision Trees.</p></div>
+    <div class="ji wk rv" style="--d:.04s"><span class="jt">Freelance</span><div class="jd">2024</div><h3>Freelance Video Editor</h3><h4>Encreators</h4><p>Premiere Pro &amp; After Effects productions.</p></div>
+    <div class="ji ed rv" style="--d:.08s"><span class="jt">Education</span><div class="jd">Aug 2023</div><h3>B.Tech CSE Begins</h3><h4>NIEC · GGSIPU</h4><p>JEE Mains 93.2%ile. Class 12: 93.5%.</p></div>
+  </div>
+</section>
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Mar 2025</span>
-                        <h3>Participant - Arma-Code</h3>
-                        <h4>IISER BHOPAL</h4>
-                        <p>Developed an Event Management Platform for an on-spot problem statement.</p>
-                    </div>
-                </div>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="ceye rv">Get in touch</p>
+  <h2 class="ctit rv" style="--d:.06s">Let's<br><em>Talk.</em></h2>
+  <p class="csub rv" style="--d:.12s">Open for AI, ML, Cybersecurity, Content &amp; Collaboration.</p>
+  <div class="cbtns rv" style="--d:.18s">
+    <a href="mailto:deepanshutyagi0784@gmail.com" class="btn-p mag">Send Email</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=deepanshutyagi0784@gmail.com" target="_blank" class="btn-s mag">Open Gmail ↗</a>
+  </div>
+  <div class="csoc rv" style="--d:.24s">
+    <a href="https://github.com/deepanshutyagi86" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.instagram.com/becoming.beacon" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="mailto:deepanshutyagi0784@gmail.com"><i class="fas fa-envelope"></i></a>
+  </div>
+</section>
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Mar 2025</span>
-                        <h3>1st Place & CTF Runner Up</h3>
-                        <h4>Techkriti, IIT Kanpur</h4>
-                        <p>Won 1st in ECDC (Galactic Dodger) with Team ROBOGYAN. Secured Runner-up in CTF.</p>
-                        
-                    </div>
-                </div>
+<footer>
+  <div class="sw">
+    <p>© 2025 Deepanshu Tyagi</p>
+    <p><a href="https://deepanshu-one.vercel.app" target="_blank">deepanshu-one.vercel.app ↗</a></p>
+  </div>
+</footer>
 
-                 <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Feb 2025</span>
-                        <h3>Top 10 Finalist - INNERVE9</h3>
-                        <h4>Techfest - AIT Pune</h4>
-                        <p>Built 'Meet Assistant' using Cloudflare security for a sponsored track.</p>
-                    </div>
-                </div>
+<script>
+/* ── CURSOR ─────────────────────────────────── */
+const ring = document.getElementById('cur-ring');
+const dot  = document.getElementById('cur-dot');
+let rx=0,ry=0,mx=0,my=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+});
+(function loop(){
+  rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
+  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+});
+// Invert cursor on dark carousel section
+const carouselSection = document.getElementById('featured');
+window.addEventListener('scroll',()=>{
+  const r = carouselSection.getBoundingClientRect();
+  const inCarousel = r.top < window.innerHeight/2 && r.bottom > window.innerHeight/2;
+  ring.classList.toggle('light-mode', inCarousel);
+  dot.classList.toggle('light-mode', inCarousel);
+},{passive:true});
 
-                <div class="timeline-item edu">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Feb 2025</span>
-                        <h3>Cert: Advanced Learning Algorithms</h3>
-                        <h4>DeepLearning.AI / Coursera</h4>
-                        <p>Specialized in Neural Networks and Decision Trees.</p>
-                    </div>
-                </div>
+/* ── MAGNETIC BUTTONS ───────────────────────── */
+document.querySelectorAll('.mag').forEach(el=>{
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)*.26;
+    const dy=(e.clientY-r.top-r.height/2)*.26;
+    el.style.transform=`translate(${dx}px,${dy}px)`;
+  });
+  el.addEventListener('mouseleave',()=>el.style.transform='');
+});
 
-                <div class="timeline-item hackathon">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Dec 2024</span>
-                        <h3>Participant - DSCI CTF-2024</h3>
-                        <h4>The Pullman, Aerocity</h4>
-                        <p>First participation in the Data Security Council of India Hackathon.</p>
-                    </div>
-                </div>
+/* ── NAV SCROLL ─────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>50),{passive:true});
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Nov 2024</span>
-                        <h3>Volunteer (Video Editor)</h3>
-                        <h4>GDGC INNOVA</h4>
-                        <p>Contributed as video editor for Google Developer Groups event.</p>
-                    </div>
-                </div>
+/* ── MOBILE MENU ────────────────────────────── */
+const hbtn=document.getElementById('hbg'), mbd=document.getElementById('mobd'), mov=document.getElementById('mobov');
+const tog=o=>{hbtn.classList.toggle('o',o);mbd.classList.toggle('o',o);mov.classList.toggle('o',o);document.body.style.overflow=o?'hidden':'';};
+hbtn.addEventListener('click',()=>tog(!hbtn.classList.contains('o')));
+mov.addEventListener('click',()=>tog(false));
+document.querySelectorAll('[data-c]').forEach(el=>el.addEventListener('click',()=>tog(false)));
 
-                <div class="timeline-item edu">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Aug - Oct 2024</span>
-                        <h3>Certifications: ML & Social Media</h3>
-                        <h4>Coursera / DeepLearning.AI</h4>
-                        <p>Completed Supervised Machine Learning and Instagram Engagement certifications.</p>
-                    </div>
-                </div>
+/* ── SCROLL REVEAL ──────────────────────────── */
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+}),{threshold:.07,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Jan - July 2024</span>
-                        <h3>Freelance Video Editor</h3>
-                        <h4>Encreators</h4>
-                        <p>Professional video editing using Premiere Pro & After Effects.</p>
-                    </div>
-                </div>
+/* ── CAROUSEL ───────────────────────────────── */
+const slides  = Array.from(document.querySelectorAll('.cs-slide'));
+const dotsEl  = document.getElementById('csDots');
+const numEl   = document.getElementById('csNum');
+const bar     = document.getElementById('csBar');
+const TOTAL   = slides.length;
+const DURATION = 5000; // ms per slide
+let current = 0;
+let timer   = null;
+let dir     = 1; // 1 = forward, -1 = backward
 
-                <div class="timeline-item work">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2023 - Present</span>
-                        <h3>Physics & Maths Tutor</h3>
-                        <h4>Freelance / Private</h4>
-                        <p>Tutoring students in Physics and Mathematics.</p>
-                    </div>
-                </div>
+// Build dots
+slides.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='cs-dot'+(i===0?' on':'');
+  d.setAttribute('aria-label',`Slide ${i+1}`);
+  d.addEventListener('click',()=>goTo(i));
+  dotsEl.appendChild(d);
+});
 
-                <div class="timeline-item edu">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">Aug 2023</span>
-                        <h3>B.Tech CSE Journey Begins</h3>
-                        <h4>NIEC (GGSIPU)</h4>
-                        <p>Cleared JEE Mains (93.2%ile) and started engineering.</p>
-                    </div>
-                </div>
+function updateUI(){
+  document.querySelectorAll('.cs-dot').forEach((d,i)=>d.classList.toggle('on',i===current));
+  numEl.textContent = String(current+1).padStart(2,'0');
+}
 
-            </div>
-        </section>
+function goTo(index, direction){
+  if(index===current) return;
+  const d = direction !== undefined ? direction : (index > current ? 1 : -1);
+  slides[current].classList.remove('active');
+  slides[current].classList.remove('entering-right','entering-left');
 
-        
+  current = (index + TOTAL) % TOTAL;
 
-        <section id="contact" class="contact-section">
-            <h2>Ready to collaborate?</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Open for opportunities in Cyber Security & Data Science.</p>
-            <a href="mailto:deepanshutyagi0784@gmail.com" class="btn-primary">Send Email</a>
-        </section>
+  slides[current].classList.remove('entering-right','entering-left');
+  // Trigger reflow
+  void slides[current].offsetWidth;
+  slides[current].classList.add(d>0 ? 'entering-right' : 'entering-left');
+  slides[current].classList.add('active');
+  updateUI();
+  resetProgress();
+}
 
+function next(){ goTo(current+1, 1); }
+function prev(){ goTo(current-1,-1); }
 
+// Progress bar
+function resetProgress(){
+  bar.classList.remove('running');
+  bar.style.setProperty('--dur', DURATION+'ms');
+  void bar.offsetWidth;
+  bar.classList.add('running');
+}
 
-    <script src="assets/js/main.js"></script>
-</body>
+function startAuto(){
+  clearInterval(timer);
+  timer = setInterval(next, DURATION);
+  resetProgress();
+}
+function stopAuto(){
+  clearInterval(timer);
+  bar.classList.remove('running');
+}
+
+document.getElementById('csNext').addEventListener('click',()=>{stopAuto();next();startAuto();});
+document.getElementById('csPrev').addEventListener('click',()=>{stopAuto();prev();startAuto();});
+
+// Pause on hover
+carouselSection.addEventListener('mouseenter',stopAuto);
+carouselSection.addEventListener('mouseleave',startAuto);
+
+// Touch/swipe
+let touchX=0;
+carouselSection.addEventListener('touchstart',e=>touchX=e.touches[0].clientX,{passive:true});
+carouselSection.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-touchX;
+  if(Math.abs(dx)>50){stopAuto();dx<0?next():prev();startAuto();}
+},{passive:true});
+
+// Keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'){stopAuto();next();startAuto();}
+  if(e.key==='ArrowLeft' ){stopAuto();prev();startAuto();}
+});
+
+// Start
+startAuto();
+
+/* ── PAGE TRANSITIONS ───────────────────────── */
+document.querySelectorAll('.pl').forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    const href=link.getAttribute('href');
+    const c=document.createElement('div');
+    Object.assign(c.style,{position:'fixed',inset:0,background:'var(--bg)',zIndex:9000,transform:'translateY(100%)',transition:'transform 0.65s cubic-bezier(0.76,0,0.24,1)'});
+    document.body.appendChild(c);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.transform='translateY(0)'}));
+    setTimeout(()=>location.href=href,680);
+  });
+});
+
+/* ── SMOOTH SCROLL ──────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.getElementById(a.getAttribute('href').slice(1));
+    if(!t)return; e.preventDefault();
+    window.scrollTo({top:t.getBoundingClientRect().top+scrollY-70,behavior:'smooth'});
+  });
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
