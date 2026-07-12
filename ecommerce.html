@@ -54,7 +54,20 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(3.5rem,9vw,10rem);le
 .strip-links{display:flex;gap:20px}
 .strip-links a{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--light);transition:color .2s;cursor:none}
 .strip-links a:hover{color:var(--black)}
-@media(max-width:600px){body{overflow-y:auto;cursor:default}main{height:auto;min-height:100vh;padding:110px 20px 100px}.strip{position:static}.ghost,#torus,#dotfield,#trail{display:none}#cr,#cd{display:none}}
+@media(max-width:600px){
+  body{overflow-y:auto;cursor:auto}
+  a,button,.form button{cursor:pointer}
+  main{height:auto;min-height:100vh;padding:96px 22px 96px}
+  h1{font-size:clamp(2.6rem,15vw,4rem);letter-spacing:-2px}
+  .sub{font-size:clamp(1.5rem,9vw,2.4rem)}
+  .desc{font-size:.88rem}
+  .check{gap:14px 18px}
+  .ck{font-size:.62rem}
+  .form{max-width:100%}
+  .strip{position:static;flex-direction:column;gap:10px;text-align:center;padding:18px 20px}
+  .ghost,#torus,#dotfield,#trail{display:none}
+  #cr,#cd{display:none}
+}
 @media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}#torus{display:none}}
 </style>
 </head>

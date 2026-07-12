@@ -692,7 +692,12 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 @media(max-width:900px) {
   .nlinks,.ncta { display:none; }
   .hbg { display:flex; }
+  body { cursor:auto; }
+  a,button,.hbg { cursor:pointer; }
+  #cur-ring,#cur-dot,#trail { display:none; }
   .h-in { grid-template-columns:1fr; gap:36px; }
+  .h-name { white-space:normal; }
+  .hnl { white-space:normal; }
   .h-photo-w { max-width:280px; margin:0 auto; }
   .h-stats { flex-wrap:wrap; }
   .hs { flex:0 0 50%; margin-right:0; border-right:none; padding-right:0; border-bottom:1px solid var(--border); margin-bottom:20px; padding-bottom:20px; }
@@ -730,6 +735,10 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .projects,.ventures,.contact { padding:72px 0; }
   .jhead { padding-top:72px; }
   .h-in { padding:40px 20px 0; }
+  /* let the name breathe onto two lines instead of clipping */
+  .h-name { white-space:normal; font-size:clamp(40px,13vw,64px); letter-spacing:-2px; line-height:1.02; }
+  .hnl { white-space:normal; }
+  .wgap { width:100%; height:0; }
   .h-stats { padding:0 20px 48px; margin-top:44px; }
   .curr-in { padding:0 20px; }
   .ci { flex:0 0 100%; }
@@ -737,14 +746,20 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .pc { padding:28px; }
   .vpcnt { padding:28px; }
   .jtrack { padding:28px 20px 0; }
-  .cs-content { padding:28px 24px; }
+  .cs-content { padding:24px 20px 34px; }
   .cs-content h2 { font-size:clamp(1.8rem,8vw,3rem); }
+  .cs-content p { font-size:.9rem; max-width:100%; }
+  .cs-badge { font-size:.56rem; }
+  .cs-ui { bottom:20px; right:20px; }
+  .cs-count strong { font-size:1.3rem; }
   .ctit { font-size:clamp(2.8rem,15vw,5.5rem); letter-spacing:-2px; }
   footer .sw { flex-direction:column; gap:8px; text-align:center; }
-  body { cursor:default; }
+  /* touch devices: bring the real cursor back, drop custom + heavy fx */
+  body { cursor:auto; }
+  a,button,.pc,.ci,.vp,.h-photo-stack,.cs-dot,.cs-arrow,.slnk,.ncta,.form button { cursor:pointer; }
   #cur-ring,#cur-dot { display:none; }
   .oring.r2 { display:none; }
-  #trail,#term { display:none; }
+  #trail,#term,#dotfield,#shards { display:none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }

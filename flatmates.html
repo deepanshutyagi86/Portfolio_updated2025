@@ -92,7 +92,26 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(3rem,6.5vw,7rem);let
 .strip-links{display:flex;gap:20px}
 .strip-links a{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--light);transition:color .2s;cursor:none}
 .strip-links a:hover{color:var(--black)}
-@media(max-width:900px){main{grid-template-columns:1fr;overflow-y:auto;height:auto;min-height:100vh}.ml{padding:100px 24px 44px}.mr{padding:44px 24px 100px;border-left:none;border-top:1px solid var(--border)}.strip{position:static}body{overflow-y:auto;cursor:default}#cr,#cd,#dotfield,#trail{display:none}.dcard{cursor:grab}}
+@media(max-width:900px){
+  main{grid-template-columns:1fr;overflow-y:auto;height:auto;min-height:100vh}
+  .ml{padding:100px 24px 40px}
+  .mr{padding:40px 24px 100px;border-left:none;border-top:1px solid var(--border)}
+  .strip{position:static}
+  body{overflow-y:auto;cursor:auto}
+  a,button,.form button,.dbtn{cursor:pointer}
+  #cr,#cd,#dotfield,#trail{display:none}
+  .demo{max-width:100%}
+  .deck{height:190px}
+  .dcard{cursor:grab}
+  .iso{width:min(240px,68%)}
+}
+@media(max-width:600px){
+  .ml{padding:92px 20px 36px}
+  .mr{padding:36px 20px 96px}
+  h1{font-size:clamp(2.8rem,17vw,4.2rem)}
+  .sub{font-size:clamp(1.4rem,9vw,2.2rem)}
+  .strip{flex-direction:column;gap:10px;text-align:center;padding:16px 20px}
+}
 @media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}.iso{animation:none}}
 </style>
 </head>

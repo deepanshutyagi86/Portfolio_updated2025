@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard · Deepanshu Tyagi — Everything I'm Building</title>
+<meta name="description" content="Businesses, websites, apps, teaching, events & code — the complete map of what Deepanshu Tyagi is building." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #09090b;
+    --bg-2: #101014;
+    --bg-3: #17171d;
+    --line: rgba(255,255,255,0.07);
+    --line-2: rgba(255,255,255,0.14);
+    --text: #f2f2f0;
+    --text-2: #9b9b96;
+    --text-3: #5c5c58;
+
+    /* category colors */
+    --biz: #4ade80;        /* green — business & equity */
+    --biz-bg: rgba(74,222,128,0.08);
+    --biz-line: rgba(74,222,128,0.25);
+
+    --web: #60a5fa;        /* blue — websites */
+    --web-bg: rgba(96,165,250,0.08);
+    --web-line: rgba(96,165,250,0.25);
+
+    --app: #c084fc;        /* purple — apps */
+    --app-bg: rgba(192,132,252,0.08);
+    --app-line: rgba(192,132,252,0.25);
+
+    --teach: #fbbf24;      /* amber — teaching */
+    --teach-bg: rgba(251,191,36,0.08);
+    --teach-line: rgba(251,191,36,0.25);
+
+    --comm: #fb7185;       /* coral — community & events */
+    --comm-bg: rgba(251,113,133,0.08);
+    --comm-line: rgba(251,113,133,0.25);
+
+    --code: #2dd4bf;       /* teal — code projects */
+    --code-bg: rgba(45,212,191,0.08);
+    --code-line: rgba(45,212,191,0.25);
+
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Sora', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ═══ NAV ═══ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9,9,11,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    gap: 1rem;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; color: var(--text-2);
+    text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  }
+  .nav-logo b { color: var(--text); font-weight: 600; }
+  .nav-logo .blink { color: var(--biz); animation: blink 1.2s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .nav-pills { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .nav-pills::-webkit-scrollbar { display: none; }
+  .nav-pills a {
+    font-size: 11.5px; font-weight: 500; text-decoration: none;
+    padding: 6px 13px; border-radius: 100px; white-space: nowrap;
+    border: 1px solid transparent;
+    transition: all .2s;
+  }
+  .np-biz { color: var(--biz); } .np-biz:hover { background: var(--biz-bg); border-color: var(--biz-line); }
+  .np-web { color: var(--web); } .np-web:hover { background: var(--web-bg); border-color: var(--web-line); }
+  .np-app { color: var(--app); } .np-app:hover { background: var(--app-bg); border-color: var(--app-line); }
+  .np-teach { color: var(--teach); } .np-teach:hover { background: var(--teach-bg); border-color: var(--teach-line); }
+  .np-comm { color: var(--comm); } .np-comm:hover { background: var(--comm-bg); border-color: var(--comm-line); }
+  .np-code { color: var(--code); } .np-code:hover { background: var(--code-bg); border-color: var(--code-line); }
+  .nav-back {
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    text-decoration: none; border: 1px solid var(--line); padding: 6px 12px;
+    border-radius: 8px; white-space: nowrap; flex-shrink: 0; transition: all .2s;
+  }
+  .nav-back:hover { color: var(--text-2); border-color: var(--line-2); }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2.5rem); }
+
+  /* ═══ HERO ═══ */
+  .hero { padding: 4.5rem 0 3.5rem; }
+  .hero-top { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .live-dot {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 11px; color: var(--biz);
+    background: var(--biz-bg); border: 1px solid var(--biz-line);
+    padding: 5px 12px; border-radius: 100px;
+  }
+  .live-dot::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--biz); animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(74,222,128,.4)} 50%{opacity:.7; box-shadow:0 0 0 6px rgba(74,222,128,0)} }
+
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    line-height: 1.06; letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 .hl-biz { color: var(--biz); font-style: italic; }
+  .hero h1 .hl-web { color: var(--web); font-style: italic; }
+  .hero h1 .hl-teach { color: var(--teach); font-style: italic; }
+  .hero-sub { font-size: 15.5px; color: var(--text-2); max-width: 620px; line-height: 1.75; font-weight: 300; }
+  .hero-sub b { color: var(--text); font-weight: 500; }
+
+  /* the legend — teaches the color system instantly */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2rem;
+  }
+  .legend a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; text-decoration: none;
+    padding: 8px 15px; border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    transition: transform .15s, border-color .2s;
+  }
+  .legend a:hover { transform: translateY(-2px); }
+  .legend .dot { width: 8px; height: 8px; border-radius: 3px; flex-shrink: 0; }
+  .lg-biz { color: var(--biz); } .lg-biz .dot { background: var(--biz); } .lg-biz:hover { border-color: var(--biz-line); }
+  .lg-web { color: var(--web); } .lg-web .dot { background: var(--web); } .lg-web:hover { border-color: var(--web-line); }
+  .lg-app { color: var(--app); } .lg-app .dot { background: var(--app); } .lg-app:hover { border-color: var(--app-line); }
+  .lg-teach { color: var(--teach); } .lg-teach .dot { background: var(--teach); } .lg-teach:hover { border-color: var(--teach-line); }
+  .lg-comm { color: var(--comm); } .lg-comm .dot { background: var(--comm); } .lg-comm:hover { border-color: var(--comm-line); }
+  .lg-code { color: var(--code); } .lg-code .dot { background: var(--code); } .lg-code:hover { border-color: var(--code-line); }
+  .legend a .count { font-family: var(--mono); font-size: 10px; color: var(--text-3); }
+
+  /* ═══ SECTION SHELL ═══ */
+  section { padding: 3.5rem 0; }
+  .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .sec-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem); letter-spacing: -0.01em;
+  }
+  .sec-desc { font-size: 13.5px; color: var(--text-2); margin: 0 0 1.75rem 54px; max-width: 560px; font-weight: 300; }
+
+  /* section theming */
+  .s-biz .sec-icon { background: var(--biz-bg); border: 1px solid var(--biz-line); }
+  .s-biz h2 em { color: var(--biz); font-style: italic; }
+  .s-web .sec-icon { background: var(--web-bg); border: 1px solid var(--web-line); }
+  .s-web h2 em { color: var(--web); font-style: italic; }
+  .s-app .sec-icon { background: var(--app-bg); border: 1px solid var(--app-line); }
+  .s-app h2 em { color: var(--app); font-style: italic; }
+  .s-teach .sec-icon { background: var(--teach-bg); border: 1px solid var(--teach-line); }
+  .s-teach h2 em { color: var(--teach); font-style: italic; }
+  .s-comm .sec-icon { background: var(--comm-bg); border: 1px solid var(--comm-line); }
+  .s-comm h2 em { color: var(--comm); font-style: italic; }
+  .s-code .sec-icon { background: var(--code-bg); border: 1px solid var(--code-line); }
+  .s-code h2 em { color: var(--code); font-style: italic; }
+
+  /* ═══ CLICKABLE CARDS ═══ */
+  .grid { display: grid; gap: 12px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+  a.tile {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.35rem 1.4rem;
+    position: relative;
+    transition: transform .18s ease, border-color .2s, background .2s;
+    overflow: hidden;
+  }
+  a.tile::after {
+    content: '↗';
+    position: absolute; top: 16px; right: 18px;
+    font-family: var(--mono); font-size: 14px;
+    color: var(--text-3);
+    transition: color .2s, transform .2s;
+  }
+  a.tile:hover { transform: translateY(-3px); }
+  a.tile:hover::after { transform: translate(2px,-2px); }
+
+  /* colored top strip per category */
+  a.tile::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    opacity: .85;
+  }
+  .t-biz::before { background: var(--biz); }
+  .t-biz:hover { border-color: var(--biz-line); background: linear-gradient(180deg, var(--biz-bg), var(--bg-2) 45%); }
+  .t-biz:hover::after { color: var(--biz); }
+  .t-web::before { background: var(--web); }
+  .t-web:hover { border-color: var(--web-line); background: linear-gradient(180deg, var(--web-bg), var(--bg-2) 45%); }
+  .t-web:hover::after { color: var(--web); }
+  .t-app::before { background: var(--app); }
+  .t-app:hover { border-color: var(--app-line); background: linear-gradient(180deg, var(--app-bg), var(--bg-2) 45%); }
+  .t-app:hover::after { color: var(--app); }
+  .t-teach::before { background: var(--teach); }
+  .t-teach:hover { border-color: var(--teach-line); background: linear-gradient(180deg, var(--teach-bg), var(--bg-2) 45%); }
+  .t-teach:hover::after { color: var(--teach); }
+  .t-comm::before { background: var(--comm); }
+  .t-comm:hover { border-color: var(--comm-line); background: linear-gradient(180deg, var(--comm-bg), var(--bg-2) 45%); }
+  .t-comm:hover::after { color: var(--comm); }
+  .t-code::before { background: var(--code); }
+  .t-code:hover { border-color: var(--code-line); background: linear-gradient(180deg, var(--code-bg), var(--bg-2) 45%); }
+  .t-code:hover::after { color: var(--code); }
+
+  .tile .role {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 8px; display: block;
+  }
+  .t-biz .role { color: var(--biz); }
+  .t-web .role { color: var(--web); }
+  .t-app .role { color: var(--app); }
+  .t-teach .role { color: var(--teach); }
+  .t-comm .role { color: var(--comm); }
+  .t-code .role { color: var(--code); }
+
+  .tile h3 { font-size: 16px; font-weight: 600; margin-bottom: 7px; line-height: 1.35; padding-right: 24px; }
+  .tile p { font-size: 12.5px; color: var(--text-2); line-height: 1.65; font-weight: 300; }
+
+  .tile .url {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 11px;
+    margin-top: 12px; padding: 5px 11px; border-radius: 7px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+    color: var(--text-2);
+  }
+  .t-biz:hover .url { color: var(--biz); border-color: var(--biz-line); }
+  .t-web:hover .url { color: var(--web); border-color: var(--web-line); }
+  .t-app:hover .url { color: var(--app); border-color: var(--app-line); }
+  .t-teach:hover .url { color: var(--teach); border-color: var(--teach-line); }
+  .t-comm:hover .url { color: var(--comm); border-color: var(--comm-line); }
+  .t-code:hover .url { color: var(--code); border-color: var(--code-line); }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .badge {
+    font-size: 10.5px; font-weight: 600; padding: 3.5px 10px;
+    border-radius: 100px; letter-spacing: .02em;
+  }
+  .b-equity { background: rgba(74,222,128,0.14); color: var(--biz); border: 1px solid var(--biz-line); }
+  .b-live { background: rgba(96,165,250,0.12); color: var(--web); border: 1px solid var(--web-line); }
+  .b-soon { background: rgba(251,191,36,0.12); color: var(--teach); border: 1px solid var(--teach-line); }
+  .b-dim { background: rgba(255,255,255,0.04); color: var(--text-2); border: 1px solid var(--line); }
+  .b-win { background: rgba(251,113,133,0.12); color: var(--comm); border: 1px solid var(--comm-line); }
+
+  /* big equity number */
+  .equity-num {
+    position: absolute; bottom: -12px; right: 8px;
+    font-family: var(--serif); font-style: italic;
+    font-size: 72px; line-height: 1;
+    opacity: .07; pointer-events: none; user-select: none;
+  }
+
+  /* app row card */
+  .app-emoji {
+    width: 46px; height: 46px; border-radius: 13px;
+    background: var(--app-bg); border: 1px solid var(--app-line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; margin-bottom: 12px;
+  }
+
+  /* ═══ TIMELINE ═══ */
+  .tl { margin-left: 54px; border-left: 1px solid var(--line); padding-left: 26px; position: relative; }
+  .tl-item { position: relative; padding-bottom: 22px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -31px; top: 5px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg-3); border: 2px solid var(--text-3);
+  }
+  .tl-item.now::before { background: var(--biz); border-color: var(--biz); box-shadow: 0 0 10px rgba(74,222,128,.4); }
+  .tl-item.win::before { background: var(--comm); border-color: var(--comm); box-shadow: 0 0 10px rgba(251,113,133,.4); }
+  .tl-when { font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: .06em; }
+  .tl-what { font-size: 13.5px; font-weight: 600; margin-top: 2px; line-height: 1.45; }
+  .tl-sub { font-size: 12px; color: var(--text-2); font-weight: 300; margin-top: 1px; }
+  .tl-item a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--text-3); transition: border-color .2s, color .2s; }
+  .tl-item a:hover { color: var(--web); border-color: var(--web); }
+
+  @media (max-width: 640px) {
+    .tl { margin-left: 6px; }
+    .sec-desc { margin-left: 0; }
+  }
+
+  /* ═══ CTA FOOTER ═══ */
+  .cta-final {
+    margin: 2rem 0 0; padding: 2.5rem;
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: 24px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-final::before {
+    content: ''; position: absolute; inset: 0; height: 3px;
+    background: linear-gradient(90deg, var(--biz), var(--web), var(--app), var(--teach), var(--comm), var(--code));
+  }
+  .cta-final h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: .5rem; }
+  .cta-final h2 em { font-style: italic; color: var(--biz); }
+  .cta-final p { font-size: 13.5px; color: var(--text-2); margin-bottom: 1.5rem; font-weight: 300; }
+  .cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .cta-btns a {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    padding: 11px 22px; border-radius: 12px; transition: all .2s;
+  }
+  .btn-solid { background: var(--text); color: var(--bg); }
+  .btn-solid:hover { background: var(--biz); transform: translateY(-2px); }
+  .btn-line { border: 1px solid var(--line-2); color: var(--text); }
+  .btn-line:hover { border-color: var(--text-2); transform: translateY(-2px); }
+
+  footer {
+    padding: 2.5rem 0 3rem; margin-top: 2rem;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .sig { font-family: var(--mono); font-size: 11px; color: var(--text-3); }
+  footer .socials { display: flex; gap: 6px; }
+  footer .socials a {
+    font-size: 12px; color: var(--text-2); text-decoration: none;
+    padding: 7px 14px; border: 1px solid var(--line); border-radius: 9px;
+    transition: all .2s; font-weight: 500;
+  }
+  footer .socials a:hover { color: var(--text); border-color: var(--line-2); transform: translateY(-2px); }
+
+  /* reveal animation */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="https://deepanshu-one.vercel.app/" class="nav-logo"><b>D.T</b> /dashboard<span class="blink">_</span></a>
+  <div class="nav-pills">
+    <a href="#business" class="np-biz">● Business</a>
+    <a href="#websites" class="np-web">● Websites</a>
+    <a href="#apps" class="np-app">● Apps</a>
+    <a href="#teaching" class="np-teach">● Teaching</a>
+    <a href="#community" class="np-comm">● Community</a>
+    <a href="#code" class="np-code">● Code</a>
+  </div>
+  <a href="https://deepanshu-one.vercel.app/" class="nav-back">← portfolio</a>
+</nav>
+
+<div class="container">
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="hero-top">
+      <span class="live-dot">Currently building · New Delhi</span>
+    </div>
+    <h1>One person.<br><span class="hl-biz">Businesses</span>, <span class="hl-web">products</span> &amp; <span class="hl-teach">classrooms</span>.</h1>
+    <p class="hero-sub">
+      I'm <b>Deepanshu Tyagi</b> — BTech CSE student who doesn't wait for graduation.
+      Holding <b>equity in 2 businesses</b>, shipped <b>15+ websites</b> and <b>3 Play Store apps</b>,
+      teaching at <b>3 places</b>, and organising India's biggest student hackathons.
+      Every card below is clickable — go see for yourself.
+    </p>
+
+    <div class="legend">
+      <a href="#business" class="lg-biz"><span class="dot"></span>Business &amp; Equity <span class="count">04</span></a>
+      <a href="#websites" class="lg-web"><span class="dot"></span>Websites Built <span class="count">08</span></a>
+      <a href="#apps" class="lg-app"><span class="dot"></span>Apps Live <span class="count">03</span></a>
+      <a href="#teaching" class="lg-teach"><span class="dot"></span>Teaching <span class="count">04</span></a>
+      <a href="#community" class="lg-comm"><span class="dot"></span>Community <span class="count">02</span></a>
+      <a href="#code" class="lg-code"><span class="dot"></span>Code Projects <span class="count">08</span></a>
+    </div>
+  </div>
+
+
+  <!-- ═══ 01 BUSINESS & EQUITY ═══ -->
+  <section id="business" class="s-biz">
+    <div class="sec-head reveal">
+      <div class="sec-icon">💼</div>
+      <h2>Business &amp; <em>equity</em></h2>
+    </div>
+    <p class="sec-desc reveal">Not just building for others — owning a piece of what I build. Click any card to visit the live business.</p>
+
+    <div class="grid g2">
+
+      <a href="https://muchhadeats.in/" target="_blank" rel="noopener" class="tile t-biz reveal">
+        <span class="equity-num">10%</span>
+        <span class="role">Co-founder · CTO · 10% equity</span>
+        <h3>Muchhad — Pure Desi Eats 🍪</h3>
+        <p>D2C brand selling homemade whole-wheat biscuits — jaggery-sweetened, zero preservatives, pure desi ghee. I built the entire tech: e-commerce site, cart, Cashfree payments, accounts &amp; orders.</p>
+        <div class="badges">
+          <span class="badge b-equity">10% Equity</span>
+          <span class="badge b-live">Live &amp; Selling</span>
+          <span class="badge b-dim">Food · D2C · Delhi</span>
+        </div>
+        <span class="url">🔗 muchhadeats.in</span>
+      </a>
+
+      <a href="https://sanskrititheantique.com/" target="_blank" rel="noopener" class="tile t-biz reveal">
+        <span class="equity-num">5%</span>
+        <span class="role">Tech partner · 5% equity</span>
+        <h3>Sanskriti the Antique 🏺</h3>
+        <p>Indian handicrafts &amp; antiques e-commerce — 1000+ products across sarees, lehengas, gemstones, wooden art &amp; leather diaries. I built the full store and hold 5% of the business.</p>
+        <div class="badges">
+          <span class="badge b-equity">5% Equity</span>
+          <span class="badge b-live">Live Store</span>
+          <span class="badge b-dim">E-commerce · Handicrafts</span>
+        </div>
+        <span class="url">🔗 sanskrititheantique.com</span>
+      </a>
+
+      <a href="https://flatbot.vyrelle.in/" target="_blank" rel="noopener" class="tile t-biz reveal">
+        <span class="role">Founder · Running now</span>
+        <h3>FlatBot — PG Finder Community 🏠</h3>
+        <p>Solving a real Delhi student problem: finding trustworthy PGs and flatmates. Web platform + active WhatsApp community with real users, running right now.</p>
+        <div class="badges">
+          <span class="badge b-live">Active Users</span>
+          <span class="badge b-dim">Community · Students</span>
+        </div>
+        <span class="url">🔗 flatbot.vyrelle.in</span>
+      </a>
+
+      <a href="https://deepanshu-one.vercel.app/ecommerce.html" target="_blank" rel="noopener" class="tile t-biz reveal">
+        <span class="role">Founder · In stealth</span>
+        <h3>E-Commerce Venture 🛍️</h3>
+        <p>A premium digital storefront — curated products, seamless checkout, built for the next generation of shoppers. Vision page is live, launch coming soon.</p>
+        <div class="badges">
+          <span class="badge b-soon">Coming Soon</span>
+          <span class="badge b-dim">D2C · Stealth</span>
+        </div>
+        <span class="url">🔗 explore the vision</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ 02 WEBSITES ═══ -->
+  <section id="websites" class="s-web">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🌐</div>
+      <h2>Websites <em>built &amp; shipped</em></h2>
+    </div>
+    <p class="sec-desc reveal">Real clients, real businesses, real users — from D2C stores to TEDx events. Every one is live, click and see.</p>
+
+    <div class="grid g3">
+
+      <a href="https://muchhadeats.in/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">D2C · Full E-commerce</span>
+        <h3>Muchhad Eats</h3>
+        <p>Complete store — cart, accounts, Cashfree payment gateway, order management.</p>
+        <span class="url">muchhadeats.in</span>
+      </a>
+
+      <a href="https://sanskrititheantique.com/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">WooCommerce · 1000+ products</span>
+        <h3>Sanskriti the Antique</h3>
+        <p>Handicrafts e-commerce — fashion, home decor, paintings, gemstones.</p>
+        <span class="url">sanskrititheantique.com</span>
+      </a>
+
+      <a href="https://vyrelle.in/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Marketplace platform</span>
+        <h3>Vyrelle</h3>
+        <p>Seller ecosystem — gallery, training videos, authenticated antique marketplace for artisans.</p>
+        <span class="url">vyrelle.in</span>
+      </a>
+
+      <a href="https://tedxshivajicollege.vercel.app/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Official TEDx event</span>
+        <h3>TEDx Shivaji College</h3>
+        <p>Official website for the TEDx chapter — speakers, schedule, registration.</p>
+        <span class="url">tedxshivajicollege.vercel.app</span>
+      </a>
+
+      <a href="https://travellerscompass.in" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Travel · Discovery</span>
+        <h3>Travellers Compass</h3>
+        <p>Travel discovery platform — destinations, routes and hidden spots across India.</p>
+        <span class="url">travellerscompass.in</span>
+      </a>
+
+      <a href="https://journey-junction-weld.vercel.app" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Travel · Community</span>
+        <h3>Journey Junction</h3>
+        <p>Community product for discovering and sharing travel experiences.</p>
+        <span class="url">journey-junction-weld.vercel.app</span>
+      </a>
+
+      <a href="https://flatbot.vyrelle.in/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Student tool · Own venture</span>
+        <h3>FlatBot</h3>
+        <p>PG &amp; flatmate finder for Delhi NCR students — solving a daily real problem.</p>
+        <span class="url">flatbot.vyrelle.in</span>
+      </a>
+
+      <a href="https://deepanshu-one.vercel.app/" target="_blank" rel="noopener" class="tile t-web reveal">
+        <span class="role">Personal · You came from here</span>
+        <h3>My Portfolio</h3>
+        <p>Terminal-themed animated portfolio. Featured in tech communities.</p>
+        <span class="url">deepanshu-one.vercel.app</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ 03 APPS ═══ -->
+  <section id="apps" class="s-app">
+    <div class="sec-head reveal">
+      <div class="sec-icon">📱</div>
+      <h2>Apps on <em>Play Store</em></h2>
+    </div>
+    <p class="sec-desc reveal">Three Android apps published &amp; live on Google Play. Tap any card to open the store listing.</p>
+
+    <div class="grid g3">
+
+      <a href="https://play.google.com/store/apps/details?id=com.profitgrocery.app" target="_blank" rel="noopener" class="tile t-app reveal">
+        <div class="app-emoji">🛒</div>
+        <span class="role">Grocery · Android</span>
+        <h3>Profit Grocery</h3>
+        <p>Grocery delivery app — product listings, cart, and complete order flow.</p>
+        <div class="badges"><span class="badge b-live">Live on Play Store</span></div>
+        <span class="url">▶ Google Play</span>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.vidyaras.app" target="_blank" rel="noopener" class="tile t-app reveal">
+        <div class="app-emoji">📚</div>
+        <span class="role">Education · Android</span>
+        <h3>Vidyaras</h3>
+        <p>Learning platform app — courses, structured lessons and study content for students.</p>
+        <div class="badges"><span class="badge b-live">Live on Play Store</span></div>
+        <span class="url">▶ Google Play</span>
+      </a>
+
+      <a href="https://play.google.com/store/apps/details?id=com.main_gali.app" target="_blank" rel="noopener" class="tile t-app reveal">
+        <div class="app-emoji">📍</div>
+        <span class="role">Local discovery · Android</span>
+        <h3>Main Gali</h3>
+        <p>Neighbourhood discovery app — connecting people to what's around them.</p>
+        <div class="badges"><span class="badge b-live">Live on Play Store</span></div>
+        <span class="url">▶ Google Play</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ 04 TEACHING ═══ -->
+  <section id="teaching" class="s-teach">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🎓</div>
+      <h2>Teaching &amp; <em>mentorship</em></h2>
+    </div>
+    <p class="sec-desc reveal">From institutes with 28K+ students to government school classrooms — with LinkedIn proof you can click.</p>
+
+    <div class="grid g2">
+
+      <a href="https://sumero.in/" target="_blank" rel="noopener" class="tile t-teach reveal">
+        <span class="role">Instructor · Ongoing</span>
+        <h3>Data Analytics @ Sumero Institute 📊</h3>
+        <p>Teaching the data analyst curriculum at Sumero Education, Delhi — an institute with 28,000+ students taught. Python, data tools, analysis workflows &amp; real projects.</p>
+        <div class="badges">
+          <span class="badge b-live">Currently Teaching</span>
+          <span class="badge b-dim">28K+ student institute</span>
+        </div>
+        <span class="url">🔗 sumero.in</span>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/deepanshutyagi86_its-been-almost-more-than-one-month-me-working-activity-7374844817266106368-4InB" target="_blank" rel="noopener" class="tile t-teach reveal">
+        <span class="role">Instructor + Intern · Hackveda Solutions</span>
+        <h3>Cybersecurity Teaching @ Hackveda 🔐</h3>
+        <p>Mentored students in modern cybersecurity labs — Metasploit, payload crafting, SQL injection, OWASP ZAP on Kali Linux. Also delivered the Union Bank Fraud Detection system as intern.</p>
+        <div class="badges">
+          <span class="badge b-dim">Jul–Oct 2025</span>
+          <span class="badge b-dim">Cybersecurity</span>
+        </div>
+        <span class="url">🔗 see proof on LinkedIn</span>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/deepanshutyagi86_today-i-spent-the-day-with-students-at-a-activity-7402355485133496321-Pn0P" target="_blank" rel="noopener" class="tile t-teach reveal">
+        <span class="role">Guest teacher · Volunteer</span>
+        <h3>Tech Workshops @ Govt Schools 🏫</h3>
+        <p>Conducted hands-on tech &amp; maths sessions at government schools in New Delhi — inspiring students from underserved communities to explore engineering from the ground up.</p>
+        <div class="badges">
+          <span class="badge b-dim">Dec 2025</span>
+          <span class="badge b-dim">Social impact</span>
+        </div>
+        <span class="url">🔗 see the day on LinkedIn</span>
+      </a>
+
+      <a href="https://perceptra.in/" target="_blank" rel="noopener" class="tile t-teach reveal">
+        <span class="role">Marketing collaboration · Agency</span>
+        <h3>Growth Work @ Perceptra 📈</h3>
+        <p>Collaborating with Perceptra — a Mumbai digital growth &amp; AI automation agency (250+ clients) — on marketing campaigns, web projects and AI-first growth systems.</p>
+        <div class="badges">
+          <span class="badge b-live">Active</span>
+          <span class="badge b-dim">AI marketing</span>
+        </div>
+        <span class="url">🔗 perceptra.in</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ 05 COMMUNITY ═══ -->
+  <section id="community" class="s-comm">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🔥</div>
+      <h2>Community &amp; <em>events</em></h2>
+    </div>
+    <p class="sec-desc reveal">Core team of one of India's most active builder communities + creating content that documents the journey.</p>
+
+    <div class="grid g2">
+
+      <a href="https://www.instagram.com/igniteroom.india" target="_blank" rel="noopener" class="tile t-comm reveal">
+        <span class="role">Core team · Video Editor Lead · Apr 2025 → now</span>
+        <h3>Ignite Room — India's Builder Community 🚀</h3>
+        <p>Running HackArena 2.0 across <b style="color:var(--text)">6 cities in India</b> — Delhi, Mumbai &amp; more. Led media, logistics and on-ground execution for every event. Interviewed Trickyman (Piyush Sharma) at Microsoft campus. Hosted CTB at MS Gurugram office.</p>
+        <div class="badges">
+          <span class="badge b-win">5+ events organised</span>
+          <span class="badge b-live">Active</span>
+          <span class="badge b-dim">IIIT Delhi</span>
+        </div>
+        <span class="url">🔗 @igniteroom.india</span>
+      </a>
+
+      <a href="https://www.instagram.com/thedeepanshutyagii" target="_blank" rel="noopener" class="tile t-comm reveal">
+        <span class="role">Creator · Instagram + YouTube</span>
+        <h3>@thedeepanshutyagii 🎥</h3>
+        <p>Building a community of developers and builders. Content around AI, tech, and the real journey from student to builder — events, interviews, projects, lessons. All documented.</p>
+        <div class="badges">
+          <span class="badge b-win">Growing</span>
+          <span class="badge b-dim">8+ videos produced</span>
+        </div>
+        <span class="url">🔗 follow on Instagram</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ 06 CODE ═══ -->
+  <section id="code" class="s-code">
+    <div class="sec-head reveal">
+      <div class="sec-icon">⌨️</div>
+      <h2>Code <em>projects</em></h2>
+    </div>
+    <p class="sec-desc reveal">ML, AI, security &amp; full-stack — shipped and mostly live. Click to open GitHub or the live demo.</p>
+
+    <div class="grid g3">
+
+      <a href="https://drive.google.com/file/d/1JfOnPJd9csn9nvrREnOiFM_9N69mE19V/view" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">Cybersecurity · Industrial</span>
+        <h3>Union Bank Fraud Detection</h3>
+        <p>Cyber threat prevention system — SQLi, XSS, ARP spoofing via OWASP ZAP &amp; Burp Suite.</p>
+        <div class="badges"><span class="badge b-win">Industrial delivery</span></div>
+        <span class="url">📄 view project</span>
+      </a>
+
+      <a href="https://github.com/deepanshutyagi86/Meetassist_backend" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">AI · Flutter · Top 10 INNERVE9</span>
+        <h3>MeetAssist</h3>
+        <p>Universal AI assistant for video calls — Trello integration, Cloudflare secured. Top 10 at AIT Pune.</p>
+        <div class="badges"><span class="badge b-win">Top 10 finalist</span></div>
+        <span class="url">⌥ GitHub</span>
+      </a>
+
+      <a href="https://sentiment-api-v6wr.onrender.com" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">NLP · Python · Live</span>
+        <h3>TweetSentiment Analyzer</h3>
+        <p>Classifies X posts as positive/negative using NLP + logistic regression.</p>
+        <div class="badges"><span class="badge b-live">Live demo</span></div>
+        <span class="url">🔗 try it live</span>
+      </a>
+
+      <a href="https://user-conversion-1.onrender.com" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">ML · Analytics · Live</span>
+        <h3>Conversion Rate Model</h3>
+        <p>Predicts &amp; optimises conversion rates from user session behaviour.</p>
+        <div class="badges"><span class="badge b-live">Live demo</span></div>
+        <span class="url">🔗 try it live</span>
+      </a>
+
+      <a href="https://github.com/deepanshutyagi86/Cardio-Disease-Predict" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">ML · Healthcare</span>
+        <h3>Cardio Disease Prediction</h3>
+        <p>Decision Trees, Random Forest &amp; XGBoost with scikit-learn.</p>
+        <span class="url">⌥ GitHub</span>
+      </a>
+
+      <a href="https://github.com/deepanshutyagi86/clgElection" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">React · Firebase</span>
+        <h3>College Election Platform</h3>
+        <p>Admin/student panels, OTP auth, secure Firestore storage.</p>
+        <span class="url">⌥ GitHub</span>
+      </a>
+
+      <a href="https://github.com/deepanshutyagi86/smart_grocery-app" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">Flutter · Firebase</span>
+        <h3>Smart Grocery</h3>
+        <p>Recipe suggestions based on ingredient expiry — cross-platform app.</p>
+        <span class="url">⌥ GitHub</span>
+      </a>
+
+      <a href="https://github.com/deepanshutyagi86" target="_blank" rel="noopener" class="tile t-code reveal">
+        <span class="role">Everything else</span>
+        <h3>All Projects → GitHub</h3>
+        <p>Image compressor, MeetAssistant frontend, sentiment API and 12+ more repos.</p>
+        <div class="badges"><span class="badge b-dim">12+ repositories</span></div>
+        <span class="url">⌥ github.com/deepanshutyagi86</span>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══ JOURNEY ═══ -->
+  <section id="journey" class="s-comm">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🏆</div>
+      <h2>The <em>journey</em> so far</h2>
+    </div>
+    <p class="sec-desc reveal">From first semester to first equity — the timeline.</p>
+
+    <div class="tl">
+      <div class="tl-item now reveal">
+        <div class="tl-when">NOW · 2026</div>
+        <div class="tl-what">Teaching data analytics at <a href="https://sumero.in/" target="_blank" rel="noopener">Sumero Institute</a> · CTO at <a href="https://muchhadeats.in/" target="_blank" rel="noopener">Muchhad</a> (10% equity)</div>
+        <div class="tl-sub">Running FlatBot · HackArena 2.0 across 6 cities · marketing with Perceptra</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">DEC 2025</div>
+        <div class="tl-what">Guest teacher at <a href="https://www.linkedin.com/posts/deepanshutyagi86_today-i-spent-the-day-with-students-at-a-activity-7402355485133496321-Pn0P" target="_blank" rel="noopener">Govt School workshops</a> · DSCI CTF at The Pullman Aerocity</div>
+        <div class="tl-sub">Inspiring the next generation + advanced network forensics</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">OCT 2025</div>
+        <div class="tl-what">Delivered Union Bank of India Fraud Detection System</div>
+        <div class="tl-sub">Hackveda Solutions — internship complete, also <a href="https://www.linkedin.com/posts/deepanshutyagi86_its-been-almost-more-than-one-month-me-working-activity-7374844817266106368-4InB" target="_blank" rel="noopener">taught cybersecurity labs</a></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">AUG 2025</div>
+        <div class="tl-what">Hosted CTB at Microsoft Gurugram office — Ignite Room</div>
+        <div class="tl-sub">Builders, creators &amp; engineers under one roof</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">JUN 2025</div>
+        <div class="tl-what">Video Lead — HackArena at IIIT Delhi</div>
+        <div class="tl-sub">End-to-end media for the 2-day hackathon</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">APR 2025</div>
+        <div class="tl-what">Core Team @ Ignite Room · Runner-up DROID 7.0 Mody University</div>
+        <div class="tl-sub">Appointed Video Editor Lead · pitched AR tech concept</div>
+      </div>
+      <div class="tl-item win reveal">
+        <div class="tl-when">MAR 2025</div>
+        <div class="tl-what">🏆 1st Place — Techkriti, IIT Kanpur (ECDC: Galactic Dodger)</div>
+        <div class="tl-sub">Team ROBOGYAN · also CTF runner-up · Arma-Code IISER Bhopal</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">FEB 2025</div>
+        <div class="tl-what">Top 10 Finalist — INNERVE9, AIT Pune (MeetAssist)</div>
+        <div class="tl-sub">Built with Cloudflare for sponsored hackathon track</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">2024</div>
+        <div class="tl-what">Freelance Video Editor — Encreators</div>
+        <div class="tl-sub">Premiere Pro &amp; After Effects productions</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-when">AUG 2023</div>
+        <div class="tl-what">B.Tech CSE begins — NIEC, GGSIPU, New Delhi</div>
+        <div class="tl-sub">JEE Mains 93.2%ile · Class 12: 93.5% · Class 10: 95%</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ FINAL CTA ═══ -->
+  <div class="cta-final reveal">
+    <h2>Want to <em>build</em> something together?</h2>
+    <p>Whether it's a website, an app, teaching, or a venture — I execute. Let's talk.</p>
+    <div class="cta-btns">
+      <a href="mailto:deepanshutyagi0784@gmail.com" class="btn-solid">✉️ Email me</a>
+      <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank" rel="noopener" class="btn-line">LinkedIn ↗</a>
+      <a href="https://www.instagram.com/thedeepanshutyagii" target="_blank" rel="noopener" class="btn-line">Instagram ↗</a>
+      <a href="https://github.com/deepanshutyagi86" target="_blank" rel="noopener" class="btn-line">GitHub ↗</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="sig">deepanshu@portfolio ~/dashboard · © 2026 Deepanshu Tyagi</div>
+    <div class="socials">
+      <a href="https://deepanshu-one.vercel.app/" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://deepanshu-one.vercel.app/Deepanshu_Resume.pdf" target="_blank" rel="noopener">Resume</a>
+    </div>
+  </footer>
+
+</div><!-- /container -->
+</div><!-- /wrap -->
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
