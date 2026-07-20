@@ -1,0 +1,6 @@
+{
+    "rewrites": [
+      { "source": "/courses", "destination": "https://courses-8dnl.onrender.com/courses" },
+      { "source": "/courses/:path*", "destination": "https://courses-8dnl.onrender.com/courses/:path*" }
+    ]
+  }
