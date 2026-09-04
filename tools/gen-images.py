@@ -24,6 +24,8 @@ SRCS = [
     "assets/images/featured/mum26.jpeg",
     "assets/images/featured/sirma.jpeg",
     "assets/images/profile.jpg",
+    "assets/images/profile1.jpg",
+    "assets/images/profile23.jpg",
 ]
 WIDTHS = [480, 960, 1600]
 report = []

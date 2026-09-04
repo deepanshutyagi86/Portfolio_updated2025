@@ -20,10 +20,13 @@ const MIME = { '.html':'text/html; charset=utf-8', '.js':'text/javascript', '.cs
   '.svg':'image/svg+xml', '.json':'application/json', '.pdf':'application/pdf', '.ico':'image/x-icon' };
 
 /* ── the boxes each photo is actually cropped into, per breakpoint ───── */
+/* Below 900px the carousel shows each photo whole (object-fit:contain on a
+   blurred backdrop), so a slide's focal point only affects desktop. The band
+   and the hero cards are still cropped at every size. */
 const BOXES = {
-  slide: [ ['Phone', 390, 608], ['Tablet', 768, 1024], ['Desktop', 1440, 900] ],
-  band:  [ ['Phone', 390, 242], ['Tablet', 768, 422],  ['Desktop', 605, 738] ],
-  card:  [ ['Phone', 280, 373], ['Tablet', 280, 373],  ['Desktop', 420, 560] ],
+  slide: [ ['Desktop', 1440, 900], ['Laptop', 1280, 800] ],
+  band:  [ ['Phone', 390, 242], ['Tablet', 768, 422], ['Desktop', 605, 738] ],
+  card:  [ ['Phone', 300, 400], ['Tablet', 300, 400], ['Desktop', 420, 560] ],
 };
 
 const dec = s => String(s == null ? '' : s);

@@ -241,5 +241,51 @@
     "file": "assets/images/opt/profile-1600.webp"
    }
   ]
+ },
+ {
+  "src": "assets/images/profile1.jpg",
+  "stem": "profile1",
+  "orig": "2268x4032",
+  "origKB": 2017,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 54,
+    "file": "assets/images/opt/profile1-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 143,
+    "file": "assets/images/opt/profile1-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 289,
+    "file": "assets/images/opt/profile1-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/profile23.jpg",
+  "stem": "profile23",
+  "orig": "2268x4032",
+  "origKB": 1253,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 37,
+    "file": "assets/images/opt/profile23-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 94,
+    "file": "assets/images/opt/profile23-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 182,
+    "file": "assets/images/opt/profile23-1600.webp"
+   }
+  ]
  }
 ]

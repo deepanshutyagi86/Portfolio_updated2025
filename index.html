@@ -274,6 +274,8 @@ body::after {
   opacity: 0; transition: opacity .4s ease; z-index: 1;
 }
 .cs-slide.active { opacity: 1; z-index: 2; }
+/* Ambient backdrop, used only below 900px — see the phone carousel block */
+.cs-blur { display: none; }
 .cs-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -294,7 +296,7 @@ body::after {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 12px;
   background: linear-gradient(135deg, #1a1714 0%, #2a2520 100%);
-  z-index: 1;
+  z-index: 0;
 }
 .cs-placeholder i { font-size: 2.5rem; color: rgba(255,255,255,.5); }
 .cs-placeholder span { font-size:.72rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); }
@@ -712,7 +714,10 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .h-in { grid-template-columns:1fr; gap:36px; }
   .h-name { white-space:normal; }
   .hnl { white-space:normal; }
-  .h-photo-w { max-width:280px; margin:0 auto; }
+  /* `margin:0 auto` alone makes a grid item shrink-to-fit, and everything
+     inside this wrapper is absolutely positioned — so it collapsed to 2px
+     and the hero portrait was invisible on every phone. Needs a width. */
+  .h-photo-w { width:min(300px,78vw); max-width:100%; margin:0 auto; }
   .h-stats { flex-wrap:wrap; }
   .hs { flex:0 0 50%; margin-right:0; border-right:none; padding-right:0; border-bottom:1px solid var(--border); margin-bottom:20px; padding-bottom:20px; }
   .hs:nth-last-child(-n+2) { border-bottom:none; margin-bottom:0; }
@@ -769,14 +774,9 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .cs-ui { bottom:20px; right:20px; }
   .cs-count strong { font-size:1.3rem; }
   .ctit { font-size:clamp(2.8rem,15vw,5.5rem); letter-spacing:-2px; }
-  /* A full-height hero forces a ~25%-wide slice out of a landscape photo.
-     Trading a little height back widens that slice to ~35% — far more of
-     each picture survives, and the ticker below invites the scroll. */
-  .carousel-section { height:72svh; min-height:520px; }
-  .cs-content { padding:22px 20px 30px; }
-  .cs-content h2 { font-size:clamp(1.7rem,7.4vw,2.6rem); }
+  .cs-content { padding:18px 20px 24px; }
+  .cs-content h2 { font-size:clamp(1.6rem,7vw,2.4rem); }
   .cs-content p { font-size:.85rem; line-height:1.6; }
-  .cs-ui { bottom:16px; right:20px; }
   .contact { padding:76px 20px; }
   .contact::before { font-size:64vw; opacity:.55; }
   .csub { font-size:.92rem; line-height:1.6; }
@@ -791,6 +791,46 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .oring.r2 { display:none; }
   #trail,#term,#dotfield,#shards { display:none; }
 }
+/* ════════════════════════════════════════════════════════════════════
+   PHONE + TABLET CAROUSEL — show the whole photograph, never a crop.
+
+   A phone viewport is ~0.46:1. Filling it with a 1.8:1 landscape photo
+   means throwing away three quarters of the picture, and a 2.6:1
+   panorama loses even more. So below 900px the photo is contained
+   rather than cropped, and it floats on a blurred, dimmed copy of
+   itself — the same cached file, so the backdrop costs nothing.
+   Portraits, landscapes and panoramas all survive intact.
+   ════════════════════════════════════════════════════════════════════ */
+@media(max-width:900px) {
+  .carousel-section { height:80svh; min-height:540px; }
+  .cs-slide { display:flex; flex-direction:column; }
+
+  .cs-blur {
+    display:block;
+    position:absolute; inset:0; z-index:1;
+    width:100%; height:100%; object-fit:cover;
+    filter:blur(38px) saturate(1.5) brightness(.5);
+    transform:scale(1.3);
+  }
+  .cs-img {
+    position:relative; inset:auto; z-index:2;
+    flex:1 1 auto; min-height:0;
+    width:100%; height:auto;
+    object-fit:contain;
+    transform:none !important;
+  }
+  .cs-slide.active .cs-img { transform:none !important; }
+  .cs-overlay {
+    z-index:2;
+    background:linear-gradient(180deg,
+      rgba(13,13,13,.55) 0%, rgba(13,13,13,0) 18%,
+      rgba(13,13,13,0) 58%, rgba(13,13,13,.82) 100%);
+  }
+  .cs-content { position:relative; inset:auto; z-index:3; flex:0 0 auto; }
+  .cs-ui { bottom:16px; right:20px; top:auto; }
+  .cs-content { padding-bottom:54px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
   html { scroll-behavior:auto; }
@@ -845,11 +885,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 1 — Trickyman Interview -->
     <div class="cs-slide active" data-index="0">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" srcset="assets/images/opt/trickyman-480.webp 480w, assets/images/opt/trickyman-960.webp 960w, assets/images/opt/trickyman-1600.webp 1600w" sizes="100vw" src="assets/images/featured/trickyman.jpg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" srcset="assets/images/opt/trickyman-480.webp 480w, assets/images/opt/trickyman-960.webp 960w, assets/images/opt/trickyman-1600.webp 1600w" sizes="100vw">
         <img class="cs-img" data-role="slide" src="assets/images/featured/trickyman.jpg" alt="Interview with Trickyman" data-focal="trickyman" style="--fp:46% 35%" loading="eager" fetchpriority="high">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/trickyman.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🎙️ Live Interview · Microsoft Campus</div>
@@ -865,11 +905,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 2 — HackArena2.0 Mumbai Zonal -->
     <div class="cs-slide" data-index="1">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" srcset="assets/images/opt/haMum26-480.webp 480w, assets/images/opt/haMum26-960.webp 960w, assets/images/opt/haMum26-1593.webp 1593w" sizes="100vw" src="assets/images/featured/haMum26.jpeg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" srcset="assets/images/opt/haMum26-480.webp 480w, assets/images/opt/haMum26-960.webp 960w, assets/images/opt/haMum26-1593.webp 1593w" sizes="100vw">
         <img class="cs-img" data-role="slide" src="assets/images/featured/haMum26.jpeg" alt="HackArena 2.0 Mumbai Zonal" data-focal="haMum26" style="--fp:44% 45%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/haMum26.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 Organiser · HackArena2.0</div>
@@ -881,11 +921,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 3 — Satvik Interview -->
     <div class="cs-slide" data-index="2">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/tasc-480.webp 480w, assets/images/opt/tasc-960.webp 960w, assets/images/opt/tasc-1153.webp 1153w" sizes="100vw" data-src="assets/images/featured/tasc.jpeg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/tasc-480.webp 480w, assets/images/opt/tasc-960.webp 960w, assets/images/opt/tasc-1153.webp 1153w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/tasc.jpeg" alt="HackArena IIIT Delhi" data-focal="tasc" style="--fp:74% 38%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/hackarena.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">⚡ Interviewed · Satvik (TASC Member)</div>
@@ -897,11 +937,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 4 — School Workshop -->
     <div class="cs-slide" data-index="3">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/school-480.webp 480w, assets/images/opt/school-960.webp 960w, assets/images/opt/school-1170.webp 1170w" sizes="100vw" data-src="assets/images/featured/school.jpg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/school-480.webp 480w, assets/images/opt/school-960.webp 960w, assets/images/opt/school-1170.webp 1170w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/school.jpg" alt="Teaching at School" data-focal="school" style="--fp:47% 32%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/school.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🏫 Workshop · Dec 2025</div>
@@ -913,11 +953,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 5 — HackArena2.0 Delhi Finale -->
     <div class="cs-slide" data-index="4">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/HAfinal26-480.webp 480w, assets/images/opt/HAfinal26-960.webp 960w, assets/images/opt/HAfinal26-1600.webp 1600w" sizes="100vw" data-src="assets/images/featured/HAfinal26.jpeg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/HAfinal26-480.webp 480w, assets/images/opt/HAfinal26-960.webp 960w, assets/images/opt/HAfinal26-1600.webp 1600w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/HAfinal26.jpeg" alt="HackArena Delhi final" data-focal="HAfinal26" style="--fp:50% 40%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/HAfinal26.jpeg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 HackArena2.0 Delhi Finale</div>
@@ -929,11 +969,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 6 — Techkriti Win -->
     <div class="cs-slide" data-index="5">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/hackathon-480.webp 480w, assets/images/opt/hackathon-960.webp 960w, assets/images/opt/hackathon-1600.webp 1600w" sizes="100vw" data-src="assets/images/featured/hackathon.jpg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/hackathon-480.webp 480w, assets/images/opt/hackathon-960.webp 960w, assets/images/opt/hackathon-1600.webp 1600w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/hackathon.jpg" alt="Techkriti IIT Kanpur" data-focal="hackathon" style="--fp:55% 45%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/hackathon.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🏆 1st Place · IIT Kanpur</div>
@@ -945,11 +985,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 7 — CTB at MS-Office -->
     <div class="cs-slide" data-index="6">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/ignite-480.webp 480w, assets/images/opt/ignite-960.webp 960w, assets/images/opt/ignite-1600.webp 1600w" sizes="100vw" data-src="assets/images/featured/ignite.jpg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/ignite-480.webp 480w, assets/images/opt/ignite-960.webp 960w, assets/images/opt/ignite-1600.webp 1600w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/ignite.jpg" alt="CTB at Microsoft Gurugram" data-focal="ignite" style="--fp:50% 42%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/ignite.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔥 Ignite Room · Aug 2025</div>
@@ -961,11 +1001,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 8 — INNOVA 2024 -->
     <div class="cs-slide" data-index="7">
-      <picture>
+      <img class="cs-blur" aria-hidden="true" alt="" data-srcset="assets/images/opt/innova-480.webp 480w, assets/images/opt/innova-960.webp 960w, assets/images/opt/innova-1600.webp 1600w" sizes="100vw" data-src="assets/images/featured/innova.jpg" loading="lazy" decoding="async">
+        <picture>
         <source type="image/webp" data-srcset="assets/images/opt/innova-480.webp 480w, assets/images/opt/innova-960.webp 960w, assets/images/opt/innova-1600.webp 1600w" sizes="100vw">
         <img class="cs-img" data-role="slide" data-src="assets/images/featured/innova.jpg" alt="INNOVA 2024 IIIT Delhi" data-focal="innova" style="--fp:50% 45%" loading="lazy" decoding="async" fetchpriority="low">
       </picture>
-      <div class="cs-placeholder"><span>Add photo → assets/images/featured/innova.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 INNOVA 2024</div>
@@ -1064,8 +1104,8 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
         <!-- CARD 1 — copy this whole block to add another photo -->
         <div class="h-photo-card">
           <picture>
-            <source type="image/webp" srcset="assets/images/opt/profile-480.webp 480w, assets/images/opt/profile-960.webp 960w, assets/images/opt/profile-1600.webp 1600w" sizes="(max-width:900px) 280px, 420px">
-            <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi" data-role="card" data-focal="profile" style="--fp:55% 35%" loading="lazy" decoding="async"
+            <source type="image/webp" srcset="assets/images/opt/profile1-480.webp 480w, assets/images/opt/profile1-960.webp 960w, assets/images/opt/profile1-1600.webp 1600w" sizes="(max-width:900px) 280px, 420px">
+            <img src="assets/images/profile1.jpg" alt="Deepanshu Tyagi" data-role="card" data-focal="profile1" style="--fp:62% 30%" loading="lazy" decoding="async"
                  onerror="this.parentElement.style.background='var(--bg2)'">
           </picture>
         </div>
@@ -1073,8 +1113,8 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
         <!-- CARD 2 — copy this whole block to add another photo -->
         <div class="h-photo-card">
           <picture>
-            <source type="image/webp" srcset="assets/images/opt/sirma-480.webp 480w, assets/images/opt/sirma-605.webp 605w" sizes="(max-width:900px) 280px, 420px">
-            <img src="assets/images/featured/sirma.jpeg" alt="Deepanshu Tyagi" data-role="card" data-focal="sirma" style="--fp:60% 20%" loading="lazy" decoding="async">
+            <source type="image/webp" srcset="assets/images/opt/profile23-480.webp 480w, assets/images/opt/profile23-960.webp 960w, assets/images/opt/profile23-1600.webp 1600w" sizes="(max-width:900px) 280px, 420px">
+            <img src="assets/images/profile23.jpg" alt="Deepanshu Tyagi" data-role="card" data-focal="profile23" style="--fp:50% 22%" loading="lazy" decoding="async">
           </picture>
         </div>
 
@@ -1619,10 +1659,12 @@ function hydrate(i){
   const sl = slides[(i + TOTAL) % TOTAL];
   if (!sl || sl.dataset.hydrated) return;
   sl.dataset.hydrated = '1';
-  const src = sl.querySelector('source[data-srcset]');
-  if (src) { src.srcset = src.dataset.srcset; src.removeAttribute('data-srcset'); }
-  const im = sl.querySelector('img[data-src]');
-  if (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
+  sl.querySelectorAll('[data-srcset]').forEach(e => {
+    e.srcset = e.dataset.srcset; e.removeAttribute('data-srcset');
+  });
+  sl.querySelectorAll('[data-src]').forEach(e => {
+    e.src = e.dataset.src; e.removeAttribute('data-src');
+  });
 }
 function warm(i){ hydrate(i); hydrate(i+1); hydrate(i+2); }
 warm(0);
