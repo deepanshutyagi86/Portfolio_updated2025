@@ -7,7 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta name="theme-color" content="#EDE8DF">
+<link rel="preload" as="image" type="image/webp" fetchpriority="high"
+      imagesrcset="assets/images/opt/trickyman-480.webp 480w, assets/images/opt/trickyman-960.webp 960w, assets/images/opt/trickyman-1600.webp 1600w"
+      imagesizes="100vw">
 <style>
 /* ═══ TOKENS ═══════════════════════════════════════════ */
 :root {
@@ -192,7 +195,7 @@ body::after {
 
 .mob-d {
   position:fixed; top:0; right:-100%; z-index:790;
-  width:min(310px,82vw); height:100vh;
+  width:min(310px,82vw); height:100vh; height:100dvh;
   background:var(--bg);
   border-left:1px solid var(--border);
   padding:96px 40px 60px;
@@ -256,6 +259,7 @@ body::after {
 .carousel-section {
   position: relative;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   background: var(--black);
   perspective: 1400px;
@@ -273,10 +277,11 @@ body::after {
 .cs-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; object-position: center top;
+  object-fit: cover; object-position: var(--fp, center top);
   transition: transform 8s linear;
   z-index: 2;
 }
+.cs-img:not([src]) { visibility: hidden; }
 .cs-slide.active .cs-img { transform: scale(1.06); }
 .cs-overlay {
   position: absolute; inset: 0; z-index: 2;
@@ -410,7 +415,7 @@ body::after {
 
 /* ═══ HERO ════════════════════════════════════════════ */
 .hero {
-  min-height: 100vh; padding-top: 100px;
+  min-height: 100vh; min-height: 100svh; padding-top: 100px;
   display: flex; flex-direction: column; justify-content: flex-end;
   position: relative; overflow: hidden;
 }
@@ -500,7 +505,7 @@ body::after {
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
-.h-photo-card img { height:100%; object-fit:cover; object-position:center top; filter:grayscale(8%); }
+.h-photo-card img { width:100%; height:100%; object-fit:cover; object-position:var(--fp,center top); filter:grayscale(8%); }
 .h-photo-card.flip-out { transform: rotateY(-115deg) translateX(-50px) !important; opacity:0 !important; }
 .stack-dots {
   position:absolute; top:12px; right:12px; z-index:6;
@@ -541,7 +546,7 @@ body::after {
 /* ═══ ABOUT ════════════════════════════════════════════ */
 .about { display:grid; grid-template-columns:42% 58%; min-height:82vh; border-top:1px solid var(--border); }
 .abt-img { position:relative; overflow:hidden; background:var(--bg2); }
-.abt-img img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:grayscale(10%) contrast(1.04); transition:transform .8s cubic-bezier(.16,1,.3,1); }
+.abt-img img { width:100%; height:100%; object-fit:cover; object-position:var(--fp,center top); filter:grayscale(10%) contrast(1.04); transition:transform .8s cubic-bezier(.16,1,.3,1); }
 .about:hover .abt-img img { transform:scale(1.03); }
 .abt-lbl { position:absolute; bottom:26px; left:26px; font-size:.6rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(13,13,13,.4); background:rgba(237,232,223,.82); padding:5px 12px; border-radius:100px; }
 .abt-txt { padding:72px 56px 72px 52px; display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--border); }
@@ -635,7 +640,7 @@ body::after {
 .jhead .shd { margin-bottom:0; border-bottom:none; padding-bottom:0; }
 .jhint { font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; color:var(--light); text-transform:uppercase; }
 #jwrap { position:relative; }
-.jsticky { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.jsticky { position:sticky; top:0; height:100vh; height:100svh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
 .jtrack {
   display:flex; align-items:stretch; gap:18px;
   padding:0 40px; will-change:transform;
@@ -680,6 +685,15 @@ body::after {
 .csoc { display:flex; gap:22px; justify-content:center; }
 .csoc a { width:44px; height:44px; border:1.5px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.95rem; color:var(--mid); cursor:none; transition:color .2s,border-color .2s,transform .2s; box-shadow:0 2px 10px rgba(13,13,13,.06); }
 .csoc a:hover { color:var(--blue); border-color:var(--blue); transform:translateY(-3px); }
+
+/* ═══ INLINE ICONS (replaces Font Awesome) ═════════════ */
+picture { display: contents; }
+.icn { width:1em; height:1em; display:inline-block; vertical-align:-.125em; flex-shrink:0; }
+.icn-f { fill:currentColor; }
+.icn-s { fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+.csoc .icn { width:17px; height:17px; }
+.ci-icon .icn { width:18px; height:18px; }
+.pill-lbl .icn { width:12px; height:12px; }
 
 /* ═══ FOOTER ════════════════════════════════════════════ */
 footer { border-top:1px solid var(--border); padding:22px 0; }
@@ -728,6 +742,8 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   #jwrap { height:auto !important; padding-bottom:80px; }
   #pillbox { display:none; }
   .pills-static { display:flex; }
+  .contact { padding-left:24px; padding-right:24px; }
+  .a-stats { display:none; }            /* duplicate of the hero stat row */
 }
 @media(max-width:600px) {
   .sw { padding:0 20px; }
@@ -753,6 +769,20 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .cs-ui { bottom:20px; right:20px; }
   .cs-count strong { font-size:1.3rem; }
   .ctit { font-size:clamp(2.8rem,15vw,5.5rem); letter-spacing:-2px; }
+  /* A full-height hero forces a ~25%-wide slice out of a landscape photo.
+     Trading a little height back widens that slice to ~35% — far more of
+     each picture survives, and the ticker below invites the scroll. */
+  .carousel-section { height:72svh; min-height:520px; }
+  .cs-content { padding:22px 20px 30px; }
+  .cs-content h2 { font-size:clamp(1.7rem,7.4vw,2.6rem); }
+  .cs-content p { font-size:.85rem; line-height:1.6; }
+  .cs-ui { bottom:16px; right:20px; }
+  .contact { padding:76px 20px; }
+  .contact::before { font-size:64vw; opacity:.55; }
+  .csub { font-size:.92rem; line-height:1.6; }
+  .csub em { font-size:1.02rem; }
+  .cbtns { margin-bottom:38px; }
+  .abt-img { height:62vw; }
   footer .sw { flex-direction:column; gap:8px; text-align:center; }
   /* touch devices: bring the real cursor back, drop custom + heavy fx */
   body { cursor:auto; }
@@ -815,8 +845,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 1 — Trickyman Interview -->
     <div class="cs-slide active" data-index="0">
-      <img class="cs-img" src="assets/images/featured/trickyman.jpg" alt="Interview with Trickyman">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/trickyman.jpg</span></div>
+      <picture>
+        <source type="image/webp" srcset="assets/images/opt/trickyman-480.webp 480w, assets/images/opt/trickyman-960.webp 960w, assets/images/opt/trickyman-1600.webp 1600w" sizes="100vw">
+        <img class="cs-img" data-role="slide" src="assets/images/featured/trickyman.jpg" alt="Interview with Trickyman" data-focal="trickyman" style="--fp:46% 35%" loading="eager" fetchpriority="high">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/trickyman.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🎙️ Live Interview · Microsoft Campus</div>
@@ -832,8 +865,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 2 — HackArena2.0 Mumbai Zonal -->
     <div class="cs-slide" data-index="1">
-      <img class="cs-img" src="assets/images/featured/haMum26.jpeg" alt="HackArena 2.0 Mumbai Zonal">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/haMum26.jpg</span></div>
+      <picture>
+        <source type="image/webp" srcset="assets/images/opt/haMum26-480.webp 480w, assets/images/opt/haMum26-960.webp 960w, assets/images/opt/haMum26-1593.webp 1593w" sizes="100vw">
+        <img class="cs-img" data-role="slide" src="assets/images/featured/haMum26.jpeg" alt="HackArena 2.0 Mumbai Zonal" data-focal="haMum26" style="--fp:44% 45%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/haMum26.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 Organiser · HackArena2.0</div>
@@ -845,8 +881,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 3 — Satvik Interview -->
     <div class="cs-slide" data-index="2">
-      <img class="cs-img" src="assets/images/featured/tasc.jpeg" alt="HackArena IIIT Delhi">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/hackarena.jpg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/tasc-480.webp 480w, assets/images/opt/tasc-960.webp 960w, assets/images/opt/tasc-1153.webp 1153w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/tasc.jpeg" alt="HackArena IIIT Delhi" data-focal="tasc" style="--fp:74% 38%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/hackarena.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">⚡ Interviewed · Satvik (TASC Member)</div>
@@ -858,8 +897,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 4 — School Workshop -->
     <div class="cs-slide" data-index="3">
-      <img class="cs-img" src="assets/images/featured/school.jpg" alt="Teaching at School">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/school.jpg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/school-480.webp 480w, assets/images/opt/school-960.webp 960w, assets/images/opt/school-1170.webp 1170w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/school.jpg" alt="Teaching at School" data-focal="school" style="--fp:47% 32%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/school.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🏫 Workshop · Dec 2025</div>
@@ -871,8 +913,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 5 — HackArena2.0 Delhi Finale -->
     <div class="cs-slide" data-index="4">
-      <img class="cs-img" src="assets/images/featured/HAfinal26.jpeg" alt="HackArena Delhi final">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/HAfinal26.jpeg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/HAfinal26-480.webp 480w, assets/images/opt/HAfinal26-960.webp 960w, assets/images/opt/HAfinal26-1600.webp 1600w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/HAfinal26.jpeg" alt="HackArena Delhi final" data-focal="HAfinal26" style="--fp:50% 40%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/HAfinal26.jpeg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 HackArena2.0 Delhi Finale</div>
@@ -884,8 +929,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 6 — Techkriti Win -->
     <div class="cs-slide" data-index="5">
-      <img class="cs-img" src="assets/images/featured/hackathon.jpg" alt="Techkriti IIT Kanpur">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/hackathon.jpg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/hackathon-480.webp 480w, assets/images/opt/hackathon-960.webp 960w, assets/images/opt/hackathon-1600.webp 1600w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/hackathon.jpg" alt="Techkriti IIT Kanpur" data-focal="hackathon" style="--fp:55% 45%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/hackathon.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🏆 1st Place · IIT Kanpur</div>
@@ -897,8 +945,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 7 — CTB at MS-Office -->
     <div class="cs-slide" data-index="6">
-      <img class="cs-img" src="assets/images/featured/ignite.jpg" alt="CTB at Microsoft Gurugram">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/ignite.jpg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/ignite-480.webp 480w, assets/images/opt/ignite-960.webp 960w, assets/images/opt/ignite-1600.webp 1600w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/ignite.jpg" alt="CTB at Microsoft Gurugram" data-focal="ignite" style="--fp:50% 42%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/ignite.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔥 Ignite Room · Aug 2025</div>
@@ -910,8 +961,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
     <!-- SLIDE 8 — INNOVA 2024 -->
     <div class="cs-slide" data-index="7">
-      <img class="cs-img" src="assets/images/featured/innova.jpg" alt="INNOVA 2024 IIIT Delhi">
-      <div class="cs-placeholder"><i class="fas fa-camera"></i><span>Add photo → assets/images/featured/innova.jpg</span></div>
+      <picture>
+        <source type="image/webp" data-srcset="assets/images/opt/innova-480.webp 480w, assets/images/opt/innova-960.webp 960w, assets/images/opt/innova-1600.webp 1600w" sizes="100vw">
+        <img class="cs-img" data-role="slide" data-src="assets/images/featured/innova.jpg" alt="INNOVA 2024 IIIT Delhi" data-focal="innova" style="--fp:50% 45%" loading="lazy" decoding="async" fetchpriority="low">
+      </picture>
+      <div class="cs-placeholder"><span>Add photo → assets/images/featured/innova.jpg</span></div>
       <div class="cs-overlay"></div>
       <div class="cs-content">
         <div class="cs-badge">🔐 INNOVA 2024</div>
@@ -966,17 +1020,17 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
         <span class="ci-live"></span>
       </a>
       <a href="https://www.instagram.com/thedeepanshutyagii" target="_blank" class="ci">
-        <div class="ci-icon"><i class="fab fa-instagram" style="color:#E1306C"></i></div>
+        <div class="ci-icon"><svg class="icn icn-f" style="color:#E1306C" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.2.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-3.3 1.7-4.8 4.9-4.9C8.4 2.2 8.8 2.2 12 2.2ZM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.3.1-1.7.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9Z"/></svg></div>
         <div class="ci-txt"><h4>@thedeepanshutyagii</h4><p>Creating on Instagram</p></div>
         <span class="ci-live"></span>
       </a>
       <a href="https://www.youtube.com/@thedeepanshutyagi" target="_blank" class="ci">
-        <div class="ci-icon"><i class="fab fa-youtube" style="color:#FF0000"></i></div>
+        <div class="ci-icon"><svg class="icn icn-f" style="color:#FF0000" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.2c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.2C24 15.9 24 12 24 12s0-3.9-.5-5.8ZM9.5 15.6V8.4L15.8 12l-6.3 3.6Z"/></svg></div>
         <div class="ci-txt"><h4>thedeepanshutyagi</h4><p>Building on YouTube</p></div>
         <span class="ci-live"></span>
       </a>
       <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank" class="ci">
-        <div class="ci-icon"><i class="fab fa-linkedin" style="color:#0A66C2"></i></div>
+        <div class="ci-icon"><svg class="icn icn-f" style="color:#0A66C2" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.04c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.3ZM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1Zm1.8 13.1H3.6V9h3.5v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7c0-1-.8-1.7-1.8-1.7Z"/></svg></div>
         <div class="ci-txt"><h4>LinkedIn</h4><p>Sharing &amp; connecting</p></div>
         <span class="ci-live"></span>
       </a>
@@ -1009,13 +1063,19 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 
         <!-- CARD 1 — copy this whole block to add another photo -->
         <div class="h-photo-card">
-          <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi"
-               onerror="this.parentElement.style.background='var(--bg2)'">
+          <picture>
+            <source type="image/webp" srcset="assets/images/opt/profile-480.webp 480w, assets/images/opt/profile-960.webp 960w, assets/images/opt/profile-1600.webp 1600w" sizes="(max-width:900px) 280px, 420px">
+            <img src="assets/images/profile.jpg" alt="Deepanshu Tyagi" data-role="card" data-focal="profile" style="--fp:55% 35%" loading="lazy" decoding="async"
+                 onerror="this.parentElement.style.background='var(--bg2)'">
+          </picture>
         </div>
 
         <!-- CARD 2 — copy this whole block to add another photo -->
         <div class="h-photo-card">
-          <img src="assets/images/featured/sirma.jpeg" alt="Deepanshu Tyagi">
+          <picture>
+            <source type="image/webp" srcset="assets/images/opt/sirma-480.webp 480w, assets/images/opt/sirma-605.webp 605w" sizes="(max-width:900px) 280px, 420px">
+            <img src="assets/images/featured/sirma.jpeg" alt="Deepanshu Tyagi" data-role="card" data-focal="sirma" style="--fp:60% 20%" loading="lazy" decoding="async">
+          </picture>
         </div>
 
         <div class="h-sheen" id="sheen"></div>
@@ -1035,15 +1095,18 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="abt-img rv">
-    <img src="assets/images/featured/mum26.jpeg" alt="Deepanshu Tyagi" onerror="this.style.display='none'">
+    <picture>
+      <source type="image/webp" srcset="assets/images/opt/mum26-480.webp 480w, assets/images/opt/mum26-900.webp 900w" sizes="(max-width:900px) 100vw, 42vw">
+      <img src="assets/images/featured/mum26.jpeg" alt="Deepanshu Tyagi" data-role="band" data-focal="mum26" style="--fp:62% 27%" loading="lazy" decoding="async" onerror="this.style.display='none'">
+    </picture>
     <div class="abt-lbl">Deepanshu Tyagi</div>
   </div>
   <div class="abt-txt rv" style="--d:.1s">
     <span class="seye">The Person</span>
-    <h2 class="abt-h">Builder.<br><em>Creator.</em><br>Engineer.</h2>
+    <h2 class="abt-h">Builder.<em>Creator.</em>Engineer.</h2>
     <p class="abt-p">BTech CSE at GGSIPU, driven by curiosity and the need to <strong>build things that matter</strong>. Passionate about AI and ML, with hands-on experience in Cybersecurity, Data Science, and content creation.</p>
 
-    <div class="pill-lbl"><i class="fas fa-hand-pointer"></i> The toolkit — grab &amp; throw them</div>
+    <div class="pill-lbl"><svg class="icn icn-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.5V5.4a1.5 1.5 0 0 1 3 0v5.1m0-1.1a1.5 1.5 0 0 1 3 0v1.6m0-1.2a1.5 1.5 0 0 1 3 0v5.3a5.5 5.5 0 0 1-5.5 5.5h-1.6a5 5 0 0 1-4.2-2.3l-2.2-3.4a1.6 1.6 0 0 1 2.6-1.7L9 16.2"/></svg> The toolkit — grab &amp; throw them</div>
     <div id="pillbox"></div>
     <div class="pills-static">
       <span>Python</span><span>TensorFlow</span><span>Scikit-learn</span><span>Pandas</span>
@@ -1162,10 +1225,10 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
     <a href="https://mail.google.com/mail/?view=cm&fs=1&to=deepanshutyagi0784@gmail.com" target="_blank" class="btn-s mag">Open Gmail ↗</a>
   </div>
   <div class="csoc rv" style="--d:.24s">
-    <a href="https://github.com/deepanshutyagi86" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-    <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-    <a href="https://www.instagram.com/thedeepanshutyagii" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="mailto:deepanshutyagi0784@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://github.com/deepanshutyagi86" target="_blank" aria-label="GitHub"><svg class="icn icn-f" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.2 4.6 18.2 4.9 18.2 4.9c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg></a>
+    <a href="https://linkedin.com/in/deepanshutyagi86" target="_blank" aria-label="LinkedIn"><svg class="icn icn-f" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.04c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.3ZM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1Zm1.8 13.1H3.6V9h3.5v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7c0-1-.8-1.7-1.8-1.7Z"/></svg></a>
+    <a href="https://www.instagram.com/thedeepanshutyagii" target="_blank" aria-label="Instagram"><svg class="icn icn-f" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.2.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-3.3 1.7-4.8 4.9-4.9C8.4 2.2 8.8 2.2 12 2.2ZM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.3.1-1.7.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9Z"/></svg></a>
+    <a href="mailto:deepanshutyagi0784@gmail.com" aria-label="Email"><svg class="icn icn-s" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4.5" width="20" height="15" rx="2.5"/><path d="m3.2 6.2 8.8 6.4 8.8-6.4"/></svg></a>
   </div>
 </section>
 
@@ -1177,7 +1240,18 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+/* matter.js drives the desktop-only skill-pill playground — never ship it to phones */
+(function(){
+  if (window.matchMedia("(max-width:900px)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var t = document.createElement("script");
+  t.src = "https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js";
+  t.defer = true;
+  t.onload = function(){ window.dispatchEvent(new Event("matter-ready")); };
+  document.head.appendChild(t);
+})();
+</script>
 <script>
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DESKTOP = () => innerWidth > 900;
@@ -1531,6 +1605,8 @@ slides.forEach((_,i)=>{
   const d=document.createElement('button');
   d.className='cs-dot'+(i===0?' on':'');
   d.setAttribute('aria-label',`Slide ${i+1}`);
+  d.addEventListener('pointerenter',()=>hydrate(i));
+  d.addEventListener('pointerdown',()=>hydrate(i));
   d.addEventListener('click',()=>{stopAuto();goTo(i);startAuto();});
   dotsEl.appendChild(d);
 });
@@ -1538,8 +1614,22 @@ function updateUI(){
   document.querySelectorAll('.cs-dot').forEach((d,i)=>d.classList.toggle('on',i===current));
   numEl.textContent = String(current+1).padStart(2,'0');
 }
+/* Pull a deferred slide's image in just before it is needed. */
+function hydrate(i){
+  const sl = slides[(i + TOTAL) % TOTAL];
+  if (!sl || sl.dataset.hydrated) return;
+  sl.dataset.hydrated = '1';
+  const src = sl.querySelector('source[data-srcset]');
+  if (src) { src.srcset = src.dataset.srcset; src.removeAttribute('data-srcset'); }
+  const im = sl.querySelector('img[data-src]');
+  if (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
+}
+function warm(i){ hydrate(i); hydrate(i+1); hydrate(i+2); }
+warm(0);
+
 function goTo(index, direction){
   const target = (index + TOTAL) % TOTAL;
+  warm(target);
   if(target===current) return;
   const d = direction !== undefined ? direction : (target > current ? 1 : -1);
   slides[current].classList.remove('active','entering-right','entering-left');
@@ -1619,8 +1709,9 @@ startAuto();
 })();
 
 /* ── PHYSICS SKILL PILLS (Matter.js) ────────── */
-(function(){
-  if (REDUCED || !DESKTOP() || typeof Matter === 'undefined') return;
+(function boot(){
+  if (REDUCED || !DESKTOP()) return;
+  if (typeof Matter === 'undefined') { window.addEventListener('matter-ready', boot, {once:true}); return; }
   const box = document.getElementById('pillbox');
   const skills = ['Python','TensorFlow','Scikit-learn','Pandas','NumPy','FastAPI','Flutter','JavaScript','HTML/CSS','SQL','Burp Suite','OWASP ZAP','Wireshark','Nmap','Kali Linux','Linux','Git & GitHub','Bootstrap','Premiere Pro','After Effects','Photoshop','Three.js'];
   let started = false;

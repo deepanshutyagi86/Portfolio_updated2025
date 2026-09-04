@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portfolio — image &amp; copy admin</title>
+<style>
+  :root{--bg:#EDE8DF;--bg2:#E5DFD4;--ink:#0D0D0D;--mid:#6B6760;--line:#D6CFC2;--blue:#0047FF;--ok:#128a4b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+  header{position:sticky;top:0;z-index:20;background:rgba(237,232,223,.94);
+         backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+         padding:14px 24px;display:flex;align-items:center;gap:16px}
+  header h1{font-size:15px;margin:0;letter-spacing:-.2px}
+  header .sp{flex:1}
+  .hint{color:var(--mid);font-size:12.5px}
+  button{font:inherit;border:1px solid var(--line);background:#fff;color:var(--ink);
+         padding:8px 15px;border-radius:8px;cursor:pointer;transition:.15s}
+  button:hover{border-color:var(--ink)}
+  button.primary{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+  button.primary:hover{background:var(--blue);border-color:var(--blue)}
+  button.primary:disabled{opacity:.45;cursor:default;background:var(--ink)}
+  main{padding:24px;max-width:1500px;margin:0 auto}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;
+        padding:20px;margin-bottom:22px;box-shadow:0 1px 3px rgba(13,13,13,.05)}
+  .card > h2{margin:0 0 4px;font-size:16px;letter-spacing:-.2px}
+  .card > h2 span{color:var(--mid);font-weight:400;font-size:12.5px;margin-left:8px}
+  .row{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:14px}
+  /* the draggable source photo */
+  .pick{position:relative;flex:0 0 460px;max-width:460px;border-radius:10px;overflow:hidden;
+        cursor:crosshair;background:var(--bg2);user-select:none;touch-action:none;
+        border:1px solid var(--line)}
+  .pick img{display:block;width:100%;height:auto;pointer-events:none}
+  .cross{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;pointer-events:none;
+         border:2px solid #fff;border-radius:50%;
+         box-shadow:0 0 0 2px rgba(0,71,255,.85),0 2px 10px rgba(0,0,0,.5)}
+  .cross::before,.cross::after{content:'';position:absolute;background:#fff;
+        box-shadow:0 0 3px rgba(0,0,0,.7)}
+  .cross::before{left:50%;top:-13px;bottom:-13px;width:1.5px;margin-left:-.75px}
+  .cross::after{top:50%;left:-13px;right:-13px;height:1.5px;margin-top:-.75px}
+  .guide{position:absolute;inset:0;pointer-events:none;opacity:.55;
+         background:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px) 0 0/100% 25%,
+                    linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px) 0 0/25% 100%}
+  /* live previews at the real breakpoints */
+  .prevs{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+  .prev figcaption{font-size:11px;font-weight:600;letter-spacing:.08em;
+        text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+  .prev .box{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg2)}
+  .prev img{display:block;width:100%;height:100%;object-fit:cover}
+  .fields{flex:1;min-width:270px;display:flex;flex-direction:column;gap:10px}
+  label{display:block;font-size:11px;font-weight:600;letter-spacing:.07em;
+        text-transform:uppercase;color:var(--mid);margin-bottom:4px}
+  input[type=text],textarea{width:100%;font:inherit;padding:8px 10px;border-radius:7px;
+        border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+  input:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:-1px;border-color:transparent}
+  .coords{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mid)}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(120%);
+         background:var(--ink);color:#fff;padding:11px 20px;border-radius:10px;
+         box-shadow:0 8px 30px rgba(0,0,0,.28);transition:transform .3s;z-index:50}
+  .toast.on{transform:translateX(-50%) translateY(0)}
+  .toast.err{background:#a11}
+  .note{background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+        padding:13px 16px;color:var(--mid);font-size:13px;margin-bottom:22px}
+  .note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Portfolio admin</h1>
+  <span class="hint">drag the crosshair to choose what stays in frame</span>
+  <span class="sp"></span>
+  <button id="reload">Reload</button>
+  <button class="primary" id="save" disabled>Save to index.html</button>
+</header>
+
+<main>
+  <div class="note">
+    Each photo is cropped to fill a box, and the crosshair decides which part of it survives.
+    The previews on the right are the <b>exact</b> boxes the site uses at each screen size —
+    what you see there is what a visitor sees. Saving writes straight into
+    <b>index.html</b> (a copy of the previous version is kept as <b>index.html.bak</b>),
+    so afterwards just <b>git add -A &amp;&amp; git commit &amp;&amp; git push</b>.
+  </div>
+  <div id="list"></div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+let ITEMS = [], BOXES = {}, dirty = false;
+
+const ROLE_LABEL = { slide: 'Carousel slide', band: 'About-section band', card: 'Hero photo card' };
+
+function markDirty(){ dirty = true; $('#save').disabled = false; }
+
+function toast(msg, err){
+  const t = $('#toast');
+  t.textContent = msg; t.classList.toggle('err', !!err); t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2600);
+}
+
+function render(){
+  const list = $('#list');
+  list.innerHTML = '';
+  ITEMS.forEach((it, i) => {
+    const boxes = BOXES[it.role] || BOXES.slide;
+    const card = document.createElement('section');
+    card.className = 'card';
+    card.innerHTML = `
+      <h2>${it.stem}<span>${ROLE_LABEL[it.role]}${it.index != null ? ' · slide ' + (it.index + 1) : ''}</span></h2>
+      <div class="row">
+        <div class="pick" data-i="${i}">
+          <img src="${it.src}" alt="">
+          <div class="guide"></div>
+          <div class="cross" style="left:${it.x}%;top:${it.y}%"></div>
+        </div>
+        <div class="prevs">
+          ${boxes.map(([label, w, h]) => {
+            const scale = Math.min(1, 210 / w, 300 / h);
+            return `<figure class="prev" style="margin:0">
+              <figcaption>${label} · ${w}×${h}</figcaption>
+              <div class="box" style="width:${Math.round(w*scale)}px;height:${Math.round(h*scale)}px">
+                <img src="${it.src}" alt="" style="object-position:${it.x}% ${it.y}%">
+              </div>
+            </figure>`;
+          }).join('')}
+        </div>
+        <div class="fields">
+          <div class="coords">object-position: <b>${it.x}% ${it.y}%</b></div>
+          ${it.role === 'slide' ? `
+            <div><label>Badge</label><input type="text" data-f="badge" value="${esc(it.badge)}"></div>
+            <div><label>Title <span style="text-transform:none;font-weight:400">(&lt;br&gt; allowed)</span></label>
+                 <input type="text" data-f="title" value="${esc(it.title)}"></div>
+            <div><label>Description</label><textarea rows="4" data-f="desc">${esc(it.desc)}</textarea></div>
+          ` : `<div class="hint">Focal point only — this photo has no caption.</div>`}
+        </div>
+      </div>`;
+    list.appendChild(card);
+
+    /* drag / click to set the focal point */
+    const pick = $('.pick', card);
+    const move = ev => {
+      const r = pick.getBoundingClientRect();
+      const pt = ev.touches ? ev.touches[0] : ev;
+      const x = Math.max(0, Math.min(100, Math.round((pt.clientX - r.left) / r.width  * 100)));
+      const y = Math.max(0, Math.min(100, Math.round((pt.clientY - r.top ) / r.height * 100)));
+      it.x = x; it.y = y;
+      $('.cross', card).style.left = x + '%';
+      $('.cross', card).style.top  = y + '%';
+      card.querySelectorAll('.prev img').forEach(im => im.style.objectPosition = x + '% ' + y + '%');
+      $('.coords', card).innerHTML = 'object-position: <b>' + x + '% ' + y + '%</b>';
+      markDirty();
+    };
+    let down = false;
+    pick.addEventListener('pointerdown', e => { down = true; pick.setPointerCapture(e.pointerId); move(e); });
+    pick.addEventListener('pointermove', e => { if (down) move(e); });
+    pick.addEventListener('pointerup',   () => { down = false; });
+
+    card.querySelectorAll('[data-f]').forEach(el => {
+      el.addEventListener('input', () => { it[el.dataset.f] = el.value; markDirty(); });
+    });
+  });
+}
+
+const esc = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+async function load(){
+  const r = await fetch('/api/slides');
+  const d = await r.json();
+  ITEMS = d.items; BOXES = d.boxes;
+  dirty = false; $('#save').disabled = true;
+  render();
+}
+
+$('#save').addEventListener('click', async () => {
+  $('#save').disabled = true;
+  const r = await fetch('/api/save', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: ITEMS })
+  });
+  const d = await r.json();
+  if (d.ok) { toast('Saved to index.html — previous version kept as index.html.bak'); dirty = false; }
+  else { toast('Save failed: ' + d.error, true); $('#save').disabled = false; }
+});
+
+$('#reload').addEventListener('click', () => {
+  if (dirty && !confirm('Discard unsaved changes?')) return;
+  load();
+});
+
+addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+load();
+</script>
+</body>
+</html>

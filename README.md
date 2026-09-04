@@ -116,3 +116,47 @@ A portfolio website with dynamic background effects and interactive elements to 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## Mobile / performance notes (Sept 2026)
+
+### Responsive images
+
+Every cropped photo is served as WebP at three widths from `assets/images/opt/`,
+wrapped in `<picture>` with the original JPEG left as the `src` fallback.
+The carousel loads slide 1 eagerly (it is the LCP element and is preloaded from
+`<head>`); the rest are held in `data-srcset` / `data-src` and pulled in by the
+`hydrate()` / `warm()` helpers just before the carousel reaches them.
+
+First load on a phone went from ~3.3 MB to ~250 KB.
+
+**After adding or replacing a photo**, regenerate the WebP set:
+
+```bash
+python3 tools/gen-images.py
+```
+
+then point the new slide's `<source srcset>` at the files it prints.
+
+### Focal points
+
+A phone crops a landscape photo down to a narrow vertical slice, so each image
+carries a `--fp` custom property (`style="--fp:46% 35%"`) that feeds
+`object-position`. That is what decides which part of the picture survives the
+crop at every screen size.
+
+### Admin panel
+
+Don't hand-edit those percentages — use the local admin:
+
+```bash
+node admin/server.js      # then open http://localhost:4321
+```
+
+Drag the crosshair on any photo and three live previews (phone / tablet /
+desktop, at the real box sizes) update as you drag. Carousel badge, title and
+description are editable there too. **Save** writes straight into `index.html`
+and keeps the previous version as `index.html.bak`; commit and push as usual.
+
+The admin is local-only — `.vercelignore` keeps it out of the deployment.

@@ -1,0 +1,245 @@
+[
+ {
+  "src": "assets/images/featured/trickyman.jpg",
+  "stem": "trickyman",
+  "orig": "2000x1088",
+  "origKB": 269,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 21,
+    "file": "assets/images/opt/trickyman-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 61,
+    "file": "assets/images/opt/trickyman-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 118,
+    "file": "assets/images/opt/trickyman-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/haMum26.jpeg",
+  "stem": "haMum26",
+  "orig": "1593x618",
+  "origKB": 401,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 20,
+    "file": "assets/images/opt/haMum26-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 59,
+    "file": "assets/images/opt/haMum26-960.webp"
+   },
+   {
+    "w": 1593,
+    "kb": 126,
+    "file": "assets/images/opt/haMum26-1593.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/tasc.jpeg",
+  "stem": "tasc",
+  "orig": "1153x659",
+  "origKB": 95,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 17,
+    "file": "assets/images/opt/tasc-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 39,
+    "file": "assets/images/opt/tasc-960.webp"
+   },
+   {
+    "w": 1153,
+    "kb": 49,
+    "file": "assets/images/opt/tasc-1153.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/school.jpg",
+  "stem": "school",
+  "orig": "1170x646",
+  "origKB": 100,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 17,
+    "file": "assets/images/opt/school-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 42,
+    "file": "assets/images/opt/school-960.webp"
+   },
+   {
+    "w": 1170,
+    "kb": 53,
+    "file": "assets/images/opt/school-1170.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/HAfinal26.jpeg",
+  "stem": "HAfinal26",
+  "orig": "1600x1067",
+  "origKB": 240,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 22,
+    "file": "assets/images/opt/HAfinal26-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 66,
+    "file": "assets/images/opt/HAfinal26-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 145,
+    "file": "assets/images/opt/HAfinal26-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/hackathon.jpg",
+  "stem": "hackathon",
+  "orig": "2000x1125",
+  "origKB": 257,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 19,
+    "file": "assets/images/opt/hackathon-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 51,
+    "file": "assets/images/opt/hackathon-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 98,
+    "file": "assets/images/opt/hackathon-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/ignite.jpg",
+  "stem": "ignite",
+  "orig": "2000x1125",
+  "origKB": 370,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 22,
+    "file": "assets/images/opt/ignite-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 72,
+    "file": "assets/images/opt/ignite-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 189,
+    "file": "assets/images/opt/ignite-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/innova.jpg",
+  "stem": "innova",
+  "orig": "1999x784",
+  "origKB": 543,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 18,
+    "file": "assets/images/opt/innova-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 57,
+    "file": "assets/images/opt/innova-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 122,
+    "file": "assets/images/opt/innova-1600.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/mum26.jpeg",
+  "stem": "mum26",
+  "orig": "900x1600",
+  "origKB": 201,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 47,
+    "file": "assets/images/opt/mum26-480.webp"
+   },
+   {
+    "w": 900,
+    "kb": 120,
+    "file": "assets/images/opt/mum26-900.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/featured/sirma.jpeg",
+  "stem": "sirma",
+  "orig": "605x880",
+  "origKB": 196,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 39,
+    "file": "assets/images/opt/sirma-480.webp"
+   },
+   {
+    "w": 605,
+    "kb": 55,
+    "file": "assets/images/opt/sirma-605.webp"
+   }
+  ]
+ },
+ {
+  "src": "assets/images/profile.jpg",
+  "stem": "profile",
+  "orig": "2000x1088",
+  "origKB": 269,
+  "variants": [
+   {
+    "w": 480,
+    "kb": 21,
+    "file": "assets/images/opt/profile-480.webp"
+   },
+   {
+    "w": 960,
+    "kb": 61,
+    "file": "assets/images/opt/profile-960.webp"
+   },
+   {
+    "w": 1600,
+    "kb": 118,
+    "file": "assets/images/opt/profile-1600.webp"
+   }
+  ]
+ }
+]
