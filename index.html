@@ -726,7 +726,11 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .curr-items { flex-wrap:wrap; }
   .ci { flex:0 0 50%; border-top:1px solid var(--border); }
   .about { grid-template-columns:1fr; }
-  .abt-img { height:55vw; }
+  /* mum26.jpeg is a 900x1600 portrait; forcing it into a short band
+     cropped most of it away. Below 900px let it stand at its own
+     height so the whole photograph is visible. */
+  .abt-img { height:auto; }
+  .abt-img img { height:auto; object-fit:contain; }
   .abt-txt { border-left:none; border-top:1px solid var(--border); padding:50px 36px; }
   .pgrid { grid-template-columns:1fr; }
   .vpnls { flex-direction:column; min-height:auto; }
@@ -782,7 +786,6 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   .csub { font-size:.92rem; line-height:1.6; }
   .csub em { font-size:1.02rem; }
   .cbtns { margin-bottom:38px; }
-  .abt-img { height:62vw; }
   footer .sw { flex-direction:column; gap:8px; text-align:center; }
   /* touch devices: bring the real cursor back, drop custom + heavy fx */
   body { cursor:auto; }
