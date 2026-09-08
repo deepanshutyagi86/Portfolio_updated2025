@@ -821,18 +821,21 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
     box-shadow:0 14px 40px rgba(0,0,0,.62);
     transition:none;
   }
+  /* Both prints stay fully inside the frame — a print clipped by the
+     screen edge reads as a bug, not as a photograph tossed on a table.
+     The front one starts below the nav so the logo never lands on it. */
   .cs-img {
-    width:84%; top:2%; left:0;
-    transform:rotate(-3.5deg) !important;
+    width:80%; top:72px; left:3%;
+    transform:rotate(-3.2deg) !important;
     z-index:3;
   }
-  .cs-slide.active .cs-img { transform:rotate(-3.5deg) !important; }
+  .cs-slide.active .cs-img { transform:rotate(-3.2deg) !important; }
   .cs-back {
     display:block;
-    width:62%; bottom:4%; right:0;
-    transform:rotate(5deg);
+    width:57%; bottom:11%; right:3%;
+    transform:rotate(4.5deg);
     z-index:1;
-    filter:brightness(.7);
+    filter:brightness(.68) saturate(.92);
   }
 
   .cs-overlay {
@@ -841,6 +844,10 @@ footer a { color:var(--light); transition:color .2s; } footer a:hover { color:va
   }
   .cs-content { position:relative; inset:auto; z-index:4; flex:0 0 auto; }
   .cs-ui { bottom:16px; right:20px; top:auto; }
+  /* over the dark carousel the ink logo/burger vanish; lift them until
+     the nav picks up its bone background on scroll */
+  #nav:not(.sc) .nlogo { color:#F7F4EE; }
+  #nav:not(.sc) .hbg span { background:#F7F4EE; }
   .cs-content { padding-bottom:54px; }
 }
 
